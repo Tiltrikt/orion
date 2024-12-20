@@ -1,0 +1,35 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'orion'
+
+[
+        "orion-service"
+
+].forEach {
+    include it
+}
+
+rootProject.children.each { project ->
+    {
+        setProjectBuildFileName(project)
+    }
+}
+
+void setProjectBuildFileName(project) {
+    project.buildFileName = "${project.name}.gradle"
+    project.children.each { subproject ->
+        {
+            setProjectBuildFileName(subproject)
+        }
+    }
+}
