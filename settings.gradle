@@ -13,7 +13,10 @@ dependencyResolutionManagement {
 rootProject.name = 'orion'
 
 [
-        "orion-service"
+        "orion-service",
+        "orion-service-api-spec",
+        "orion-service-api-event-streaming",
+        "orion-client"
 
 ].forEach {
     include it
