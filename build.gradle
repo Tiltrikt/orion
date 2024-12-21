@@ -5,7 +5,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
-allprojects {
+subprojects {
     apply plugin: 'idea'
     apply plugin: 'java-library'
     apply plugin: 'org.springframework.boot'
