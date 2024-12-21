@@ -11,7 +11,7 @@ import java.util.Map;
 @Getter
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class InstanceModel {
+public class Instance {
 
     @NotNull String instanceId;
 

@@ -1,3 +1,4 @@
 dependencies {
+    implementation project(":orion-service-api-spec")
     implementation project(":orion-service-api-event-streaming")
 }
