@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.annotation.RetryableTopic;
-import org.springframework.kafka.retrytopic.DltStrategy;
 import org.springframework.stereotype.Component;
 
 
@@ -23,10 +20,12 @@ public class InstanceHeartbeatConsumer {
 
     @NotNull LeaseService leaseService;
 
-    @KafkaListener(topics = KafkaTopicConfiguration.INSTANCE_HEARTBEAT_TOPIC, groupId = "orion-service")
+    @KafkaListener(
+            topics = KafkaTopicConfiguration.INSTANCE_HEARTBEAT_TOPIC,
+            groupId = "orion-service",
+            errorHandler = "heartbeatExceptionHandler"
+    )
     public void receive(@NotNull InstanceHeartbeatEvent event) {
-        System.out.println(event);
         leaseService.renewLicense(event.getInstanceId());
-
     }
 }
