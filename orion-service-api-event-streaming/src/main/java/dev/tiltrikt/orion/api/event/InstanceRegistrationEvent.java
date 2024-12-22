@@ -23,5 +23,7 @@ public class InstanceRegistrationEvent {
 
     @NotNull String port;
 
+    int leaseDuration;
+
     @NotNull Map<String, String> metadata;
 }

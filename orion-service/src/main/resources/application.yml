@@ -8,6 +8,16 @@ spring:
   main:
     banner-mode: off
 
+  datasource:
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    url: ${DATASOURCE_URL}
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
   kafka:
     producer:
       client-id: ${spring.application.name}
