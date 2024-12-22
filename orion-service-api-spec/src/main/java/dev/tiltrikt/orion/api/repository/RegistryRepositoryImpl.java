@@ -1,4 +1,4 @@
-package dev.tiltrikt.orion.api.registry;
+package dev.tiltrikt.orion.api.repository;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
