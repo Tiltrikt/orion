@@ -28,7 +28,6 @@ public class InstanceRegistrationConsumer {
     @KafkaListener(topics = KafkaTopicConfiguration.INSTANCE_REGISTRATION_TOPIC, groupId = "orion-service")
     public void receive(@NotNull InstanceRegistrationEvent instanceRegistrationEvent) {
         RegistryUpdateEvent registryUpdateEvent = new RegistryUpdateEvent(
-                instanceRegistrationEvent.getInstanceId(),
                 instanceRegistrationEvent.getServiceId(),
                 instanceRegistrationEvent.getHost(),
                 instanceRegistrationEvent.getPort(),

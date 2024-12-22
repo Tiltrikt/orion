@@ -3,7 +3,7 @@ package dev.tiltrikt.orion.api.model;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.serviceregistry.Registration;
 
 import java.net.URI;
 import java.util.Map;
@@ -13,13 +13,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class OrionInstance implements ServiceInstance {
+public class OrionInstance implements Registration {
 
     @NotNull String serviceId;
 
     @NotNull String host;
 
-    @NotNull String port;
+    int port;
 
     @NotNull Map<String, String> metadata;
 
@@ -36,9 +36,5 @@ public class OrionInstance implements ServiceInstance {
     @Override
     public URI getUri() {
         return URI.create("http://" + host + ":" + port);
-    }
-
-    public int getPort() {
-        return Integer.parseInt(port);
     }
 }

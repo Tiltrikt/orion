@@ -1,6 +1,6 @@
 package dev.tiltrikt.orion.api.discovery.client;
 
-import dev.tiltrikt.orion.api.registry.RegistryRepository;
+import dev.tiltrikt.orion.api.repository.RegistryRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

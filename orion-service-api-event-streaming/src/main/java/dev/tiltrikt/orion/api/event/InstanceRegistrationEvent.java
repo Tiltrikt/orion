@@ -15,15 +15,17 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class InstanceRegistrationEvent {
 
-    @NotNull String instanceId;
-
     @NotNull String serviceId;
 
     @NotNull String host;
 
-    @NotNull String port;
+    int port;
 
     int leaseDuration;
 
     @NotNull Map<String, String> metadata;
+
+    public @NotNull String getInstanceId() {
+        return host + ":" + port;
+    }
 }
