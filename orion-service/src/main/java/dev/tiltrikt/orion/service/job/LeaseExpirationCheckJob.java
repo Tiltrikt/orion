@@ -1,29 +1,34 @@
-package dev.tiltrikt.orion.service.consumer;
+package dev.tiltrikt.orion.service.job;
 
 import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
-import dev.tiltrikt.orion.api.event.InstanceDeregistrationEvent;
 import dev.tiltrikt.orion.api.model.Instance;
+import dev.tiltrikt.orion.service.model.LeaseModel;
 import dev.tiltrikt.orion.service.service.LeaseService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class InstanceDeregistrationConsumer {
+public class LeaseExpirationCheckJob {
 
     @NotNull KafkaTemplate<String, Instance> kafkaTemplate;
 
     @NotNull LeaseService leaseService;
 
-    @KafkaListener(topics = KafkaTopicConfiguration.INSTANCE_DEREGISTRATION_TOPIC, groupId = "orion-service")
-    public void receive(@NotNull InstanceDeregistrationEvent event) {
-        kafkaTemplate.send(KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC, event.getInstanceId(), null);
-        leaseService.deleteById(event.getInstanceId());
+    @Scheduled(fixedRate = 5000)
+    public void execute() {
+        List<LeaseModel> leaseModelList = leaseService.getAllExpired();
+        for (LeaseModel leaseModel : leaseModelList) {
+            kafkaTemplate.send(KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC, leaseModel.getId(), null);
+        }
+        leaseService.deleteAll(leaseModelList);
     }
 }

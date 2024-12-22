@@ -1,4 +1,8 @@
 dependencies {
     implementation project(":orion-service-api-spec")
     implementation project(":orion-service-api-event-streaming")
+
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+
+    runtimeOnly 'org.postgresql:postgresql'
 }
