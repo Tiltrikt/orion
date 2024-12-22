@@ -1,4 +1,4 @@
-package dev.tiltrikt.orion.api.registry;
+package dev.tiltrikt.orion.api.repository;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.cloud.client.ServiceInstance;

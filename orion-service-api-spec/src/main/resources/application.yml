@@ -1,6 +1,10 @@
 server:
   port: 8081
 
+orion:
+  client:
+
+
 spring:
   kafka:
     consumer:
@@ -9,3 +13,7 @@ spring:
       group-id: ${spring.application.name}
       properties:
         spring.json.trusted.packages: "*"
+    producer:
+      client-id: ${spring.application.name}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

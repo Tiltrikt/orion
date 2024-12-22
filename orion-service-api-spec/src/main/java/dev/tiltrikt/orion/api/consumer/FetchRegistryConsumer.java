@@ -1,8 +1,9 @@
 package dev.tiltrikt.orion.api.consumer;
 
 import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
+import dev.tiltrikt.orion.api.event.RegistryUpdateEvent;
 import dev.tiltrikt.orion.api.model.OrionInstance;
-import dev.tiltrikt.orion.api.registry.RegistryRepository;
+import dev.tiltrikt.orion.api.repository.RegistryRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,9 +25,8 @@ public class FetchRegistryConsumer {
     @NotNull RegistryRepository registryRepository;
 
     @KafkaHandler
-    public void receive(@NotNull dev.tiltrikt.orion.api.event.RegistryUpdateEvent event) {
+    public void receive(@NotNull RegistryUpdateEvent event) {
         OrionInstance orionInstance = new OrionInstance(
-                event.getInstanceId(),
                 event.getServiceId(),
                 event.getHost(),
                 event.getPort(),
