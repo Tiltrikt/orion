@@ -2,7 +2,7 @@ package dev.tiltrikt.orion.service.consumer;
 
 import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.api.event.InstanceRegistrationEvent;
-import dev.tiltrikt.orion.api.model.Instance;
+import dev.tiltrikt.orion.api.event.RegistryUpdateEvent;
 import dev.tiltrikt.orion.service.model.LeaseModel;
 import dev.tiltrikt.orion.service.model.LeaseModelFactory;
 import dev.tiltrikt.orion.service.service.LeaseService;
@@ -19,23 +19,29 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class InstanceRegistrationConsumer {
 
-    @NotNull KafkaTemplate<String, Instance> kafkaTemplate;
+    @NotNull KafkaTemplate<String, RegistryUpdateEvent> kafkaTemplate;
 
     @NotNull LeaseService leaseService;
 
     @NotNull LeaseModelFactory leaseModelFactory;
 
     @KafkaListener(topics = KafkaTopicConfiguration.INSTANCE_REGISTRATION_TOPIC, groupId = "orion-service")
-    public void receive(@NotNull InstanceRegistrationEvent event) {
-        Instance instance = new Instance(
-                event.getInstanceId(),
-                event.getServiceId(),
-                event.getHost(),
-                event.getPort(),
-                event.getMetadata()
+    public void receive(@NotNull InstanceRegistrationEvent instanceRegistrationEvent) {
+        RegistryUpdateEvent registryUpdateEvent = new RegistryUpdateEvent(
+                instanceRegistrationEvent.getInstanceId(),
+                instanceRegistrationEvent.getServiceId(),
+                instanceRegistrationEvent.getHost(),
+                instanceRegistrationEvent.getPort(),
+                instanceRegistrationEvent.getMetadata()
         );
-        kafkaTemplate.send(KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC, instance.getInstanceId(), instance);
-        LeaseModel leaseModel = leaseModelFactory.create(event.getInstanceId(), event.getLeaseDuration());
+        kafkaTemplate.send(KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC,
+                registryUpdateEvent.getInstanceId(),
+                registryUpdateEvent
+        );
+        LeaseModel leaseModel = leaseModelFactory.create(
+                instanceRegistrationEvent.getInstanceId(),
+                instanceRegistrationEvent.getLeaseDuration()
+        );
         leaseService.save(leaseModel);
     }
 }
