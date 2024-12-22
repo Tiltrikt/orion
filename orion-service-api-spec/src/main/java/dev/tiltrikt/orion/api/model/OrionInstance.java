@@ -15,8 +15,6 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrionInstance implements ServiceInstance {
 
-    @NotNull String instanceId;
-
     @NotNull String serviceId;
 
     @NotNull String host;
@@ -28,6 +26,11 @@ public class OrionInstance implements ServiceInstance {
     @Override
     public boolean isSecure() {
         return false;
+    }
+
+    @Override
+    public @NotNull String getInstanceId() {
+        return host + ":" + port;
     }
 
     @Override

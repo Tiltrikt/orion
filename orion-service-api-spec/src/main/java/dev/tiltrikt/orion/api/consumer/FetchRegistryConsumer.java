@@ -26,7 +26,6 @@ public class FetchRegistryConsumer {
     @KafkaHandler
     public void receive(@NotNull dev.tiltrikt.orion.api.event.RegistryUpdateEvent event) {
         OrionInstance orionInstance = new OrionInstance(
-                event.getInstanceId(),
                 event.getServiceId(),
                 event.getHost(),
                 event.getPort(),
