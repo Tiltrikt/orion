@@ -2,7 +2,7 @@ package dev.tiltrikt.orion.service.consumer;
 
 import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.api.event.InstanceDeregistrationEvent;
-import dev.tiltrikt.orion.api.model.Instance;
+import dev.tiltrikt.orion.api.event.RegistryUpdateEvent;
 import dev.tiltrikt.orion.service.service.LeaseService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class InstanceDeregistrationConsumer {
 
-    @NotNull KafkaTemplate<String, Instance> kafkaTemplate;
+    @NotNull KafkaTemplate<String, RegistryUpdateEvent> kafkaTemplate;
 
     @NotNull LeaseService leaseService;
 

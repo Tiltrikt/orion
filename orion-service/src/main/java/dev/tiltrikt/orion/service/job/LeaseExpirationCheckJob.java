@@ -1,7 +1,7 @@
 package dev.tiltrikt.orion.service.job;
 
 import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
-import dev.tiltrikt.orion.api.model.Instance;
+import dev.tiltrikt.orion.api.event.RegistryUpdateEvent;
 import dev.tiltrikt.orion.service.model.LeaseModel;
 import dev.tiltrikt.orion.service.service.LeaseService;
 import lombok.AccessLevel;
@@ -19,7 +19,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LeaseExpirationCheckJob {
 
-    @NotNull KafkaTemplate<String, Instance> kafkaTemplate;
+    @NotNull KafkaTemplate<String, RegistryUpdateEvent> kafkaTemplate;
 
     @NotNull LeaseService leaseService;
 
