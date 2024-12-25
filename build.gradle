@@ -1,8 +1,10 @@
+//file:noinspection GroovyAssignabilityCheck
 plugins {
     id 'idea'
     id 'java-library'
     id 'org.springframework.boot' version '3.4.1'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'maven-publish'
 }
 
 subprojects {
@@ -12,7 +14,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
     group = 'dev.tiltrikt'
-    version = '0.0.1-SNAPSHOT'
+    version = '0.0.1'
 
     java {
         toolchain {
@@ -25,9 +27,6 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok:1.18.36'
         compileOnly 'org.jetbrains:annotations:26.0.1'
 
-//        implementation 'org.apache.kafka:kafka-streams'
-
-//         https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client
 //        implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0'
 //        implementation 'net.devh:grpc-server-spring-boot-starter:3.1.0.RELEASE'
     }
@@ -39,6 +38,33 @@ subprojects {
     dependencyManagement {
         imports {
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:2024.0.0"
+        }
+    }
+
+    if (!project.path.contains("example")) {
+        apply plugin: 'maven-publish'
+        publishing {
+            publications {
+                "$project.name"(MavenPublication) {
+                    from components.java
+                    artifactId = "${project.name}-spring-cloud-starter"
+                    groupId = project.group
+                    version = project.version
+                }
+            }
+            repositories {
+                maven {
+                    name "GitLab"
+                    url "https://git.kpi.fei.tuke.sk/api/v4/projects/68034/packages/maven"
+                    credentials(HttpHeaderCredentials) {
+                        name = "Private-Token"
+                        value = System.getenv("KPI_GITLAB")
+                    }
+                    authentication {
+                        header(HttpHeaderAuthentication)
+                    }
+                }
+            }
         }
     }
 }
