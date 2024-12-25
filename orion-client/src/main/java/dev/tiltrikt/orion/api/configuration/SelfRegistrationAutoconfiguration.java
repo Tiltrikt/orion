@@ -63,4 +63,6 @@ public class SelfRegistrationAutoconfiguration {
     ) {
         return new HeartbeatJob(kafkaTemplate, thisOrionInstance);
     }
+
+
 }
