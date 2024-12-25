@@ -1,0 +1,30 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: api-gateway
+  kafka:
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: ${spring.application.name}
+      properties:
+        spring.json.trusted.packages: "dev.tiltrikt.orion.api.event"
+
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: self-registration-client
+          uri: lb://self-registration-client
+          predicates:
+            - Path=/helloWorld
+
+orion:
+  client:
+    self-registration: false
+    fetch-registry: true
+
+debug: true
