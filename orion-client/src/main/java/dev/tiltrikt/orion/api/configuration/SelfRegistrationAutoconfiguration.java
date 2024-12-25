@@ -17,10 +17,12 @@ import org.springframework.cloud.commons.util.InetUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.HashMap;
 
 @Configuration
+@EnableScheduling
 @ConditionalOnDiscoveryEnabled
 @ConditionalOnProperty(value = "orion.client.self-registration", matchIfMissing = true)
 public class SelfRegistrationAutoconfiguration {
