@@ -20,18 +20,17 @@ subprojects {
         }
     }
 
-    repositories {
-        mavenCentral()
-    }
-
     dependencies {
         compileOnly 'org.projectlombok:lombok:1.18.36'
         annotationProcessor 'org.projectlombok:lombok:1.18.36'
         compileOnly 'org.jetbrains:annotations:26.0.1'
 
         implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.kafka:spring-kafka'
         implementation 'org.apache.kafka:kafka-streams'
+
+//         https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client
+//        implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0'
+//        implementation 'net.devh:grpc-server-spring-boot-starter:3.1.0.RELEASE'
     }
 
     tasks.named('test') {
