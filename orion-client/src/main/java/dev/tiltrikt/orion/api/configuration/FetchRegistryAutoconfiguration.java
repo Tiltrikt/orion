@@ -29,13 +29,9 @@ public class FetchRegistryAutoconfiguration {
         return new FetchRegistryConsumer(registryRepository);
     }
 
-    @ConditionalOnDiscoveryEnabled
-    public static class DiscoveryClientAutoconfiguration {
-
-        @Bean
-        @NotNull DiscoveryClient discoveryClient(@NotNull RegistryRepository registryRepository) {
-            return new OrionDiscoveryClient(registryRepository);
-        }
+    @Bean
+    @NotNull DiscoveryClient discoveryClient(@NotNull RegistryRepository registryRepository) {
+        return new OrionDiscoveryClient(registryRepository);
     }
 
     @ConditionalOnReactiveDiscoveryEnabled
