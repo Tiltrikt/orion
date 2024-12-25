@@ -1,6 +1,7 @@
 package dev.tiltrikt.orion.api.registration.service;
 
 import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
+import dev.tiltrikt.orion.api.configuration.OrionConfigurationProperties;
 import dev.tiltrikt.orion.api.event.InstanceDeregistrationEvent;
 import dev.tiltrikt.orion.api.event.InstanceRegistrationEvent;
 import dev.tiltrikt.orion.api.model.OrionInstance;
@@ -10,9 +11,7 @@ import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.cloud.client.serviceregistry.ServiceRegistry;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
 
-@Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrionServiceRegistry implements ServiceRegistry<OrionInstance> {
@@ -21,13 +20,15 @@ public class OrionServiceRegistry implements ServiceRegistry<OrionInstance> {
 
     @NotNull KafkaTemplate<String, InstanceDeregistrationEvent> deregistrationKafkaTemplate;
 
+    @NotNull OrionConfigurationProperties orionConfigurationProperties;
+
     @Override
     public void register(@NotNull OrionInstance registration) {
         InstanceRegistrationEvent instanceRegistrationEvent = new InstanceRegistrationEvent(
                 registration.getServiceId(),
                 registration.getHost(),
                 registration.getPort(),
-                100,
+                orionConfigurationProperties.getClient().getLeaseDurationSec(),
                 registration.getMetadata()
         );
         registrationKafkaTemplate.send(KafkaTopicConfiguration.INSTANCE_REGISTRATION_TOPIC, instanceRegistrationEvent);

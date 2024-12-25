@@ -7,18 +7,18 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration;
 import org.springframework.cloud.client.serviceregistry.AutoServiceRegistrationProperties;
 import org.springframework.cloud.client.serviceregistry.ServiceRegistry;
-import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-
-@Component
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrionAutoRegistration extends AbstractAutoServiceRegistration<OrionInstance> {
 
-    protected OrionAutoRegistration(
+    @NotNull OrionInstance thisOrionInstance;
+
+    public OrionAutoRegistration(
             @NotNull ServiceRegistry<OrionInstance> serviceRegistry,
-            @NotNull AutoServiceRegistrationProperties properties) {
+            @NotNull AutoServiceRegistrationProperties properties,
+            @NotNull OrionInstance thisOrionInstance) {
         super(serviceRegistry, properties);
+        this.thisOrionInstance = thisOrionInstance;
     }
 
     @Override
@@ -33,12 +33,7 @@ public class OrionAutoRegistration extends AbstractAutoServiceRegistration<Orion
 
     @Override
     protected @NotNull OrionInstance getRegistration() {
-        return new OrionInstance(
-                "test-client",
-                "localhost",
-                8081,
-                new HashMap<>()
-        );
+        return thisOrionInstance;
     }
 
     @Override

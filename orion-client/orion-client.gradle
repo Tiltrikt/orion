@@ -1,0 +1,4 @@
+dependencies {
+    api project(":orion-service-api-event-streaming")
+    api "org.springframework.cloud:spring-cloud-commons"
+}
