@@ -32,5 +32,5 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       group-id: ${spring.application.name}
       properties:
-        spring.json.trusted.packages: "*"
+        spring.json.trusted.packages: "dev.tiltrikt.orion.api.event"
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}

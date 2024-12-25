@@ -7,23 +7,28 @@ import dev.tiltrikt.orion.api.repository.RegistryRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.kafka.common.TopicPartition;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.listener.ConsumerSeekAware;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.KafkaNull;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @KafkaListener(topics = KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC)
-public class FetchRegistryConsumer {
+public class FetchRegistryConsumer implements ConsumerSeekAware {
 
     @NotNull RegistryRepository registryRepository;
 
     @KafkaHandler
     public void receive(@NotNull RegistryUpdateEvent event) {
+        System.out.println("Received RegistryUpdateEvent: " + event);
         OrionInstance orionInstance = new OrionInstance(
                 event.getServiceId(),
                 event.getHost(),
@@ -36,5 +41,17 @@ public class FetchRegistryConsumer {
     @KafkaHandler
     public void delete(@Payload(required = false) KafkaNull nul, @Header(KafkaHeaders.RECEIVED_KEY) String instanceId) {
         registryRepository.deleteById(instanceId);
+    }
+
+    @Override
+    public void onPartitionsAssigned(
+            @NotNull Map<TopicPartition, Long> assignments,
+            @NotNull ConsumerSeekAware.ConsumerSeekCallback callback
+    ) {
+        for (TopicPartition topicPartition : assignments.keySet()) {
+            if (topicPartition.topic().equals(KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC)) {
+                callback.seekToBeginning(topicPartition.topic(), topicPartition.partition());
+            }
+        }
     }
 }
