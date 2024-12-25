@@ -3,9 +3,16 @@ server:
 
 orion:
   client:
+    fetch-registry: true
+    self-registration: true
+    heartbeat-rate-sec: 5
+    lease-duration-sec: 15
+  kafka-bootstrap-server: localhost:9092
 
 
 spring:
+  application:
+    name: test-service
   kafka:
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
