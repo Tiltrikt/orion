@@ -4,14 +4,12 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Repository
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RegistryRepositoryImpl implements RegistryRepository {
 
