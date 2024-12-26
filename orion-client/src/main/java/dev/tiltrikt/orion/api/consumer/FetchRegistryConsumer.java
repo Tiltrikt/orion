@@ -21,14 +21,21 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@KafkaListener(topics = KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC)
+@KafkaListener(
+        topics = KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC,
+        groupId = "${spring.application.name}",
+        properties = {
+                "bootstrap.servers:${orion.client.kafka.bootstrap-servers:localhost:9092}",
+                "spring.json.trusted.packages:${orion.client.kafka.trusted-packages:dev.tiltrikt.orion.api.event}",
+                "key.deserializer:org.apache.kafka.common.serialization.StringDeserializer",
+                "value.deserializer:org.springframework.kafka.support.serializer.JsonDeserializer"
+        })
 public class FetchRegistryConsumer implements ConsumerSeekAware {
 
     @NotNull RegistryRepository registryRepository;
 
     @KafkaHandler
     public void receive(@NotNull RegistryUpdateEvent event) {
-        System.out.println("Received RegistryUpdateEvent: " + event);
         OrionInstance orionInstance = new OrionInstance(
                 event.getServiceId(),
                 event.getHost(),

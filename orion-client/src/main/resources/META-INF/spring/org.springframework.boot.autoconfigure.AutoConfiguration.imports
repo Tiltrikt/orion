@@ -1,4 +1,4 @@
-dev.tiltrikt.orion.api.configuration.SelfRegistrationAutoconfiguration
-dev.tiltrikt.orion.api.configuration.FetchRegistryAutoconfiguration
-dev.tiltrikt.orion.api.configuration.OrionConfigurationProperties
-dev.tiltrikt.orion.api.controller.RequirementsController
+dev.tiltrikt.orion.api.autoconfiguration.SelfRegistrationAutoconfiguration
+dev.tiltrikt.orion.api.autoconfiguration.FetchRegistryAutoconfiguration
+dev.tiltrikt.orion.api.configuration.OrionClientConfigurationProperties
+dev.tiltrikt.orion.api.configuration.OrionKafkaConfigurationProperties

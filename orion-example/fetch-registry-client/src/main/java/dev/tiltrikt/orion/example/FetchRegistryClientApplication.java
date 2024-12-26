@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
-@SpringBootApplication(scanBasePackages = "dev.tiltrikt.orion")
+@SpringBootApplication
 public class FetchRegistryClientApplication {
 
     public static void main(String[] args) {

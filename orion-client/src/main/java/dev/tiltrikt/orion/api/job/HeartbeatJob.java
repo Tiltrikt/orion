@@ -22,8 +22,8 @@ public class HeartbeatJob {
 
     @Scheduled(
             timeUnit = TimeUnit.SECONDS,
-            initialDelayString = "#{@orionConfigurationProperties.client.heartbeatRateSec}",
-            fixedRateString = "#{@orionConfigurationProperties.client.heartbeatRateSec}"
+            initialDelayString = "${orion.client.heartbeat-rate-sec}",
+            fixedRateString = "${orion.client.heartbeat-rate-sec}"
     )
     public void execute() {
         InstanceHeartbeatEvent instanceHeartbeatEvent = new InstanceHeartbeatEvent(thisOrionInstance.getInstanceId());

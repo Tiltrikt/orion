@@ -14,7 +14,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
     group = 'dev.tiltrikt'
-    version = '0.0.1'
+    version = '0.0.17'
 
     java {
         toolchain {
