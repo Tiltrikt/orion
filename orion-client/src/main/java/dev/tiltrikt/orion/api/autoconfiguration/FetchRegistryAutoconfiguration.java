@@ -1,10 +1,13 @@
-package dev.tiltrikt.orion.api.configuration;
+package dev.tiltrikt.orion.api.autoconfiguration;
 
 import dev.tiltrikt.orion.api.consumer.FetchRegistryConsumer;
 import dev.tiltrikt.orion.api.discovery.client.OrionDiscoveryClient;
 import dev.tiltrikt.orion.api.discovery.client.OrionReactiveDiscoveryClient;
 import dev.tiltrikt.orion.api.repository.RegistryRepository;
 import dev.tiltrikt.orion.api.repository.RegistryRepositoryImpl;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
@@ -15,18 +18,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@RequiredArgsConstructor
 @ConditionalOnDiscoveryEnabled
 @ConditionalOnProperty(value = "orion.client.fetch-registry", matchIfMissing = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FetchRegistryAutoconfiguration {
-
-    @Bean
-    @NotNull RegistryRepository registryRepository() {
-        return new RegistryRepositoryImpl();
-    }
 
     @Bean
     @NotNull FetchRegistryConsumer fetchRegistryConsumer(@NotNull RegistryRepository registryRepository) {
         return new FetchRegistryConsumer(registryRepository);
+    }
+
+    @Bean
+    @NotNull RegistryRepository registryRepository() {
+        return new RegistryRepositoryImpl();
     }
 
     @Bean
