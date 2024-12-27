@@ -3,7 +3,7 @@ package dev.tiltrikt.orion.service.consumer;
 import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.api.event.InstanceDeregistrationEvent;
 import dev.tiltrikt.orion.api.event.RegistryUpdateEvent;
-import dev.tiltrikt.orion.service.service.LeaseService;
+import dev.tiltrikt.orion.service.service.InstanceService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,11 +19,11 @@ public class InstanceDeregistrationConsumer {
 
     @NotNull KafkaTemplate<String, RegistryUpdateEvent> kafkaTemplate;
 
-    @NotNull LeaseService leaseService;
+    @NotNull InstanceService instanceService;
 
     @KafkaListener(topics = KafkaTopicConfiguration.INSTANCE_DEREGISTRATION_TOPIC, groupId = "orion-service")
     public void receive(@NotNull InstanceDeregistrationEvent event) {
         kafkaTemplate.send(KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC, event.getInstanceId(), null);
-        leaseService.deleteById(event.getInstanceId());
+        instanceService.deleteById(event.getInstanceId());
     }
 }

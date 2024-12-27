@@ -3,9 +3,8 @@ package dev.tiltrikt.orion.service.consumer;
 import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.api.event.InstanceRegistrationEvent;
 import dev.tiltrikt.orion.api.event.RegistryUpdateEvent;
-import dev.tiltrikt.orion.service.model.LeaseModel;
-import dev.tiltrikt.orion.service.model.LeaseModelFactory;
-import dev.tiltrikt.orion.service.service.LeaseService;
+import dev.tiltrikt.orion.service.model.InstanceModel;
+import dev.tiltrikt.orion.service.service.InstanceService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -14,6 +13,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -21,9 +22,7 @@ public class InstanceRegistrationConsumer {
 
     @NotNull KafkaTemplate<String, RegistryUpdateEvent> kafkaTemplate;
 
-    @NotNull LeaseService leaseService;
-
-    @NotNull LeaseModelFactory leaseModelFactory;
+    @NotNull InstanceService instanceService;
 
     @KafkaListener(topics = KafkaTopicConfiguration.INSTANCE_REGISTRATION_TOPIC, groupId = "orion-service")
     public void receive(@NotNull InstanceRegistrationEvent instanceRegistrationEvent) {
@@ -37,10 +36,15 @@ public class InstanceRegistrationConsumer {
                 registryUpdateEvent.getInstanceId(),
                 registryUpdateEvent
         );
-        LeaseModel leaseModel = leaseModelFactory.create(
+        InstanceModel instanceModel = new InstanceModel(
                 instanceRegistrationEvent.getInstanceId(),
-                instanceRegistrationEvent.getLeaseDuration()
+                instanceRegistrationEvent.getServiceId(),
+                instanceRegistrationEvent.getHost(),
+                instanceRegistrationEvent.getPort(),
+                instanceRegistrationEvent.getMetadata(),
+                instanceRegistrationEvent.getLeaseDuration(),
+                Instant.now().plusSeconds(instanceRegistrationEvent.getLeaseDuration())
         );
-        leaseService.save(leaseModel);
+        instanceService.save(instanceModel);
     }
 }
