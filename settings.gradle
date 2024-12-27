@@ -27,7 +27,8 @@ rootProject.name = 'orion'
 
 [
         "orion-client",
-        "orion-service",
+        "orion-service-api",
+        "orion-service-kafka-impl",
         "orion-service-api-event-streaming",
         "orion-example:fetch-registry-client",
         "orion-example:self-registration-client",
