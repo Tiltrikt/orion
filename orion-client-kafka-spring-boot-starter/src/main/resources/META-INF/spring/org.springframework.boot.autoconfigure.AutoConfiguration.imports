@@ -1,0 +1,6 @@
+dev.tiltrikt.orion.client.kafka.autoconfiguration.FetchRegistryAutoconfiguration
+dev.tiltrikt.orion.client.kafka.autoconfiguration.KafkaPublisherAutoconfiguration
+dev.tiltrikt.orion.client.kafka.autoconfiguration.SelfRegistrationAutoconfiguration
+dev.tiltrikt.orion.client.kafka.configuration.OrionClientConfigurationProperties
+dev.tiltrikt.orion.client.kafka.configuration.OrionKafkaConfigurationProperties
+dev.tiltrikt.orion.client.kafka.autoconfiguration.KafkaConsumerAutoconfiguration

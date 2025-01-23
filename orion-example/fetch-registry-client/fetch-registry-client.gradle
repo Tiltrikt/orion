@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(":orion-client")
+    implementation project(":orion-client-kafka-spring-boot-starter")
     implementation "org.springframework.boot:spring-boot-starter-web"
 
 //    implementation "dev.tiltrikt:orion-client-spring-cloud-starter:0.0.17"
