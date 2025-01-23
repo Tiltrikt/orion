@@ -1,5 +1,5 @@
 dependencies {
-    api "dev.tiltrikt:orion-service-api-event-streaming:0.0.1"
+    api project(":orion-service-api-event-streaming")
     api "org.springframework.cloud:spring-cloud-commons"
     api "org.springframework.cloud:spring-cloud-starter-loadbalancer"
     compileOnly "org.springframework.boot:spring-boot-starter-webflux"

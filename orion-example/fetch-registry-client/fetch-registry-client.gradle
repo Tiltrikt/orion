@@ -1,4 +1,6 @@
 dependencies {
-//    implementation project(":orion-client")
-    implementation "dev.tiltrikt:orion-client-spring-cloud-starter:0.0.17"
+    implementation project(":orion-client")
+    implementation "org.springframework.boot:spring-boot-starter-web"
+
+//    implementation "dev.tiltrikt:orion-client-spring-cloud-starter:0.0.17"
 }

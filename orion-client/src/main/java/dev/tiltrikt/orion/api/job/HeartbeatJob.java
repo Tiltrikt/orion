@@ -1,8 +1,8 @@
 package dev.tiltrikt.orion.api.job;
 
-import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
-import dev.tiltrikt.orion.api.event.InstanceHeartbeatEvent;
 import dev.tiltrikt.orion.api.model.OrionInstance;
+import dev.tiltrikt.orion.service.api.configuration.KafkaTopicConfiguration;
+import dev.tiltrikt.orion.service.api.event.InstanceHeartbeatEvent;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

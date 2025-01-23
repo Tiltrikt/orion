@@ -1,9 +1,9 @@
 package dev.tiltrikt.orion.api.consumer;
 
-import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
-import dev.tiltrikt.orion.api.event.RegistryUpdateEvent;
 import dev.tiltrikt.orion.api.model.OrionInstance;
 import dev.tiltrikt.orion.api.repository.RegistryRepository;
+import dev.tiltrikt.orion.service.api.configuration.KafkaTopicConfiguration;
+import dev.tiltrikt.orion.service.api.event.RegistryUpdateEvent;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,7 +26,7 @@ import java.util.Map;
         groupId = "${spring.application.name}",
         properties = {
                 "bootstrap.servers:${orion.client.kafka.bootstrap-servers:localhost:9092}",
-                "spring.json.trusted.packages:${orion.client.kafka.trusted-packages:dev.tiltrikt.orion.api.event}",
+                "spring.json.trusted.packages:${orion.client.kafka.trusted-packages:dev.tiltrikt.orion.service.api.event}",
                 "key.deserializer:org.apache.kafka.common.serialization.StringDeserializer",
                 "value.deserializer:org.springframework.kafka.support.serializer.JsonDeserializer"
         })
@@ -46,6 +46,7 @@ public class FetchRegistryConsumer implements ConsumerSeekAware {
     }
 
     @KafkaHandler
+    @SuppressWarnings("unused")
     public void delete(@Payload(required = false) KafkaNull nul, @Header(KafkaHeaders.RECEIVED_KEY) String instanceId) {
         registryRepository.deleteById(instanceId);
     }

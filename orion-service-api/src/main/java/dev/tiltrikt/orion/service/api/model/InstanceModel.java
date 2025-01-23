@@ -14,10 +14,10 @@ import java.util.Map;
 @Setter
 @Builder
 @RequiredArgsConstructor
-@Table(name = "lease")
+@Table(name = "instance")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
-@SuppressWarnings("JpaDataSourceORMInspection")
+@SuppressWarnings({"JpaDataSourceORMInspection", "RedundantSuppression"})
 public class InstanceModel {
 
     @Id

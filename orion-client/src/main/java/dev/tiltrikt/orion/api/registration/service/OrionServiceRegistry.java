@@ -1,10 +1,10 @@
 package dev.tiltrikt.orion.api.registration.service;
 
-import dev.tiltrikt.orion.api.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.api.configuration.OrionClientConfigurationProperties;
-import dev.tiltrikt.orion.api.event.InstanceDeregistrationEvent;
-import dev.tiltrikt.orion.api.event.InstanceRegistrationEvent;
 import dev.tiltrikt.orion.api.model.OrionInstance;
+import dev.tiltrikt.orion.service.api.configuration.KafkaTopicConfiguration;
+import dev.tiltrikt.orion.service.api.event.InstanceDeregistrationEvent;
+import dev.tiltrikt.orion.service.api.event.InstanceRegistrationEvent;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
