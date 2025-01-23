@@ -1,0 +1,5 @@
+dependencies {
+    api project(":orion-client-domain")
+    api project(":orion-client-common")
+    api project(":orion-common-kafka")
+}

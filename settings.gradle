@@ -26,13 +26,23 @@ dependencyResolutionManagement {
 rootProject.name = 'orion'
 
 [
-        "orion-client",
-        "orion-service-api",
-        "orion-service-kafka-impl",
-        "orion-service-api-event-streaming",
+        "orion-common-event",
+        "orion-common-kafka",
+
+        "orion-service-domain",
+        "orion-service-common",
+        "orion-service-kafka-adapter",
+        "orion-service-kafka-spring-boot-starter",
+
+        "orion-client-domain",
+        "orion-client-common",
+        "orion-client-kafka-adapter",
+        "orion-client-kafka-spring-boot-starter",
+
         "orion-example:fetch-registry-client",
         "orion-example:self-registration-client",
         "orion-example:api-gateway",
+        "orion-example:orion-service"
 
 
 ].forEach {

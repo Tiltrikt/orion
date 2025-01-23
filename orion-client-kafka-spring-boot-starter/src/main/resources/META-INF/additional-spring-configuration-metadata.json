@@ -1,0 +1,65 @@
+{
+  "groups": [
+    {
+      "name": "orion.client",
+      "type": "dev.tiltrikt.orion.client.kafka.configuration.OrionClientConfigurationProperties",
+      "sourceType": "dev.tiltrikt.orion.client.kafka.configuration.OrionClientConfigurationProperties"
+    },
+    {
+      "name": "orion.client.kafka",
+      "type": "dev.tiltrikt.orion.client.kafka.configuration.OrionKafkaConfigurationProperties",
+      "sourceType": "dev.tiltrikt.orion.client.kafka.configuration.OrionKafkaConfigurationProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "orion.client.fetch-registry",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.tiltrikt.orion.client.kafka.configuration.OrionClientConfigurationProperties",
+      "description": "Determines whether the Orion client should fetch the registry information automatically on startup.",
+      "defaultValue": true
+    },
+    {
+      "name": "orion.client.heartbeat-rate-sec",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.tiltrikt.orion.client.kafka.configuration.OrionClientConfigurationProperties",
+      "description": "The interval in seconds at which the client sends heartbeat messages to the Orion server. Could not be less than lease-duration-sec.",
+      "defaultValue": 30
+    },
+    {
+      "name": "orion.client.kafka.bootstrap-servers",
+      "type": "java.lang.String",
+      "sourceType": "dev.tiltrikt.orion.client.kafka.configuration.OrionKafkaConfigurationProperties",
+      "description": "The address of the Kafka broker(s) that the Orion client connects to for message publishing and consumption.",
+      "defaultValue": "localhost:9092"
+    },
+    {
+      "name": "orion.client.kafka.trusted-packages",
+      "type": "java.lang.String",
+      "sourceType": "dev.tiltrikt.orion.client.kafka.configuration.OrionKafkaConfigurationProperties",
+      "description": "A comma-separated list of package names that the Kafka client considers as trusted for deserialization.",
+      "defaultValue": "dev.tiltrikt.orion.common.event"
+    },
+    {
+      "name": "orion.client.lease-duration-sec",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.tiltrikt.orion.client.kafka.configuration.OrionClientConfigurationProperties",
+      "description": "The duration in seconds for which a lease is valid before service would be removed from registry. Must be at bigger than 'orion.client.heartbeat-rate-sec'.",
+      "defaultValue": 90
+    },
+    {
+      "name": "orion.client.self-registration",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.tiltrikt.orion.client.kafka.configuration.OrionClientConfigurationProperties",
+      "description": "Determines whether the Orion client should automatically register itself with the Orion server at startup.",
+      "defaultValue": true
+    },
+    {
+      "name": "orion.client.kafka.group-id",
+      "type": "java.lang.String",
+      "description": "Each client must have a different group id to obtain the full registry.",
+      "defaultValue": "${spring.application.name}"
+    }
+  ],
+  "hints": []
+}

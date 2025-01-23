@@ -1,0 +1,8 @@
+dependencies {
+    api project(":orion-client-kafka-adapter")
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}
+
+tasks.named('compileJava') {
+    inputs.files(tasks.named('processResources'))
+}
