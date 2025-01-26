@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = "dev.tiltrikt.orion ")
-public class OrionServiceApplication {
+public class OrionServiceApplicationA {
 
     public static void main(String[] args) {
-        SpringApplication.run(OrionServiceApplication.class, args);
+        SpringApplication.run(OrionServiceApplicationA.class, args);
     }
 }

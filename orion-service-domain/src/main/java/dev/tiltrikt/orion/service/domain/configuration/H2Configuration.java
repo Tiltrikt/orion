@@ -10,8 +10,14 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
-@EntityScan(basePackages = "dev.tiltrikt.orion.service.domain.model")
-@EnableJpaRepositories(basePackages = "dev.tiltrikt.orion.service.domain.repository")
+@EntityScan(basePackages = {
+        "dev.tiltrikt.orion.service.domain.model",
+        "dev.tiltrikt.orion.service.domain.follower.model"
+})
+@EnableJpaRepositories(basePackages = {
+        "dev.tiltrikt.orion.service.domain.repository",
+        "dev.tiltrikt.orion.service.domain.follower.repository"
+})
 public class H2Configuration {
 
     @Bean

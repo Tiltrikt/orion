@@ -1,5 +1,7 @@
 package dev.tiltrikt.orion.service.domain.service;
 
+import dev.tiltrikt.orion.common.event.ReplicationRegistryUpdateEvent;
+import dev.tiltrikt.orion.service.common.publisher.ReplicationRegistryUpdatePublisher;
 import dev.tiltrikt.orion.service.domain.exception.InstanceException;
 import dev.tiltrikt.orion.service.domain.model.InstanceModel;
 import dev.tiltrikt.orion.service.domain.repository.InstanceRepository;
@@ -18,6 +20,8 @@ public class InstanceServiceImpl implements InstanceService {
 
     @NotNull InstanceRepository instanceRepository;
 
+    @NotNull ReplicationRegistryUpdatePublisher registryUpdatePublisher;
+
     @Override
     @Unmodifiable
     public @NotNull List<InstanceModel> getAllExpired() {
@@ -32,6 +36,16 @@ public class InstanceServiceImpl implements InstanceService {
 
     @Override
     public @NotNull InstanceModel save(@NotNull InstanceModel instanceModel) {
+        ReplicationRegistryUpdateEvent event = new ReplicationRegistryUpdateEvent(
+                instanceModel.getId(),
+                instanceModel.getServiceId(),
+                instanceModel.getHost(),
+                instanceModel.getPort(),
+                instanceModel.getLeaseDuration(),
+                instanceModel.getMetadata(),
+                instanceModel.getLeaseExpirationTime()
+        );
+        registryUpdatePublisher.publishUpdate(instanceModel.getId(), event);
         return instanceRepository.save(instanceModel);
     }
 

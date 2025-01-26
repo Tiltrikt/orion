@@ -12,39 +12,47 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfiguration {
 
-    public static final String INSTANCE_REGISTRATION_TOPIC = "instance-registration";
-    public static final String INSTANCE_DEREGISTRATION_TOPIC = "instance-deregistration";
-    public static final String INSTANCE_HEARTBEAT_TOPIC = "instance-heartbeat";
     public static final String FETCH_REGISTRY_TOPIC = "fetch-registry";
+    public static final String REPLICATION_REGISTRY_TOPIC = "replication-registry";
+    public static final String NODE_REGISTRY_TOPIC = "node-registry";
+    public static final String INSTANCE_REGISTRY_TOPIC = "instance-registry";
 
     @Bean
-    @NotNull NewTopic instanceRegistrationTopic() {
+    @NotNull NewTopic instanceRegistry() {
         return TopicBuilder
-                .name(INSTANCE_REGISTRATION_TOPIC)
-                .partitions(1)
-                .replicas(1)
-                .build();
-    }
-
-
-    @Bean
-    @NotNull NewTopic instanceDeregistrationTopic() {
-        return TopicBuilder
-                .name(INSTANCE_DEREGISTRATION_TOPIC)
+                .name(INSTANCE_REGISTRY_TOPIC)
                 .partitions(1)
                 .replicas(1)
                 .build();
     }
 
     @Bean
-    @NotNull NewTopic instanceHeartbeatTopic() {
+    @NotNull NewTopic replicationRegistryTopic() {
         return TopicBuilder
-                .name(INSTANCE_HEARTBEAT_TOPIC)
-                .partitions(3)
+                .name(REPLICATION_REGISTRY_TOPIC)
+                .partitions(1)
                 .replicas(1)
+                .compact()
+                .config(TopicConfig.MIN_COMPACTION_LAG_MS_CONFIG, "1")
+                .config(TopicConfig.MAX_COMPACTION_LAG_MS_CONFIG, "100")
+                .config(TopicConfig.MIN_CLEANABLE_DIRTY_RATIO_CONFIG, "0.001")
+                .config(TopicConfig.SEGMENT_MS_CONFIG, "10000")
                 .build();
     }
 
+    @Bean
+    @NotNull NewTopic nodeRegistryTopic() {
+        return TopicBuilder
+                .name(NODE_REGISTRY_TOPIC)
+                .partitions(1)
+                .replicas(1)
+                .compact()
+                .config(TopicConfig.MIN_COMPACTION_LAG_MS_CONFIG, "1")
+                .config(TopicConfig.MAX_COMPACTION_LAG_MS_CONFIG, "100")
+                .config(TopicConfig.MIN_CLEANABLE_DIRTY_RATIO_CONFIG, "0.001")
+                .config(TopicConfig.SEGMENT_MS_CONFIG, "10000")
+                .build();
+    }
 
     @Bean
     @NotNull NewTopic fetchRegistryTopic() {
