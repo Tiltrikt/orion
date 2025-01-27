@@ -48,19 +48,6 @@ services:
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=broker:9093
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
 
-  database:
-    image: postgres:14.1-alpine
-    restart: unless-stopped
-    container_name: postgres
-    environment:
-      - POSTGRES_USER=dev
-      - POSTGRES_PASSWORD=dev
-      - POSTGRES_DB=orion
-    ports:
-      - '5432:5432'
-    volumes:
-      - db:/var/lib/postgresql/data
-
 networks:
   local-kafka:
     driver: bridge

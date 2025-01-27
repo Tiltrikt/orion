@@ -22,7 +22,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @KafkaListener(
-        topics = KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC,
+        topics = KafkaTopicConfiguration.REGISTRY_TOPIC,
         groupId = "${spring.application.name}"
 )
 public class FetchRegistryConsumer implements ConsumerSeekAware {
@@ -52,7 +52,7 @@ public class FetchRegistryConsumer implements ConsumerSeekAware {
             @NotNull ConsumerSeekAware.ConsumerSeekCallback callback
     ) {
         for (TopicPartition topicPartition : assignments.keySet()) {
-            if (topicPartition.topic().equals(KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC)) {
+            if (topicPartition.topic().equals(KafkaTopicConfiguration.REGISTRY_TOPIC)) {
                 callback.seekToBeginning(topicPartition.topic(), topicPartition.partition());
             }
         }

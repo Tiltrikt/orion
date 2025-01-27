@@ -1,8 +1,8 @@
 package dev.tiltrikt.orion.service.domain.service;
 
-import dev.tiltrikt.orion.common.event.ReplicationRegistryUpdateEvent;
+import dev.tiltrikt.orion.common.event.ReplicationEvent;
 import dev.tiltrikt.orion.service.common.publisher.ReplicationRegistryUpdatePublisher;
-import dev.tiltrikt.orion.service.domain.exception.InstanceException;
+import dev.tiltrikt.orion.service.domain.exception.InstanceNotFoundException;
 import dev.tiltrikt.orion.service.domain.model.InstanceModel;
 import dev.tiltrikt.orion.service.domain.repository.InstanceRepository;
 import lombok.AccessLevel;
@@ -31,12 +31,12 @@ public class InstanceServiceImpl implements InstanceService {
     @Override
     public @NotNull InstanceModel getById(@NotNull String instanceId) {
         return instanceRepository.findById(instanceId)
-                .orElseThrow(() -> new InstanceException("Instance '%s' not exists", instanceId));
+                .orElseThrow(() -> new InstanceNotFoundException("Instance '%s' not exists", instanceId));
     }
 
     @Override
     public @NotNull InstanceModel save(@NotNull InstanceModel instanceModel) {
-        ReplicationRegistryUpdateEvent event = new ReplicationRegistryUpdateEvent(
+        ReplicationEvent event = new ReplicationEvent(
                 instanceModel.getId(),
                 instanceModel.getServiceId(),
                 instanceModel.getHost(),
@@ -62,7 +62,7 @@ public class InstanceServiceImpl implements InstanceService {
     @Override
     public @NotNull InstanceModel renewLicense(@NotNull String instanceId) {
         InstanceModel instanceModel = instanceRepository.findById(instanceId)
-                .orElseThrow(() -> new InstanceException("Instance '%s' not exists", instanceId));
+                .orElseThrow(() -> new InstanceNotFoundException("Instance '%s' not exists", instanceId));
         instanceModel.setLeaseExpirationTime(Instant.now().plusSeconds(instanceModel.getLeaseDuration()));
         return instanceRepository.save(instanceModel);
     }

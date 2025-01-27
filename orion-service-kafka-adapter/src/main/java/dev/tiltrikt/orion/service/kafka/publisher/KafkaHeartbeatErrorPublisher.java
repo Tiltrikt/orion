@@ -1,8 +1,6 @@
 package dev.tiltrikt.orion.service.kafka.publisher;
 
 import dev.tiltrikt.orion.common.configuration.KafkaTopicConfiguration;
-import dev.tiltrikt.orion.common.event.NodeHeartbeatEvent;
-import dev.tiltrikt.orion.service.common.publisher.NodeEventPublisher;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,12 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class KafkaNodeEventPublisher implements NodeEventPublisher {
+public class KafkaHeartbeatErrorPublisher {
 
-    @NotNull KafkaTemplate<String, NodeHeartbeatEvent> kafkaTemplate;
+    @NotNull KafkaTemplate<String, String> kafkaTemplate;
 
-    @Override
-    public void publishUpdate(@NotNull NodeHeartbeatEvent event) {
-        kafkaTemplate.send(KafkaTopicConfiguration.NODE_EVENT_TOPIC, String.valueOf(event.getId()), event);
+    public void publishError(@NotNull String instanceId) {
+        kafkaTemplate.send(KafkaTopicConfiguration.HEARTBEAT_ERROR_TOPIC, instanceId, "");
     }
 }

@@ -1,63 +1,44 @@
 package dev.tiltrikt.orion.service.kafka.autoconfiguration;
 
+import dev.tiltrikt.orion.common.event.InstanceHeartbeatEvent;
 import dev.tiltrikt.orion.common.event.RegistryUpdateEvent;
-import dev.tiltrikt.orion.service.common.manager.ConsumerManager;
 import dev.tiltrikt.orion.service.common.publisher.RegistryUpdatePublisher;
-import dev.tiltrikt.orion.service.domain.follower.handler.node.update.NodeUpdateHandler;
-import dev.tiltrikt.orion.service.domain.follower.handler.node.update.NodeUpdateHandlerImpl;
-import dev.tiltrikt.orion.service.domain.follower.handler.replication.ReplicationHandler;
-import dev.tiltrikt.orion.service.domain.follower.handler.replication.ReplicationHandlerImpl;
-import dev.tiltrikt.orion.service.domain.follower.model.Node;
-import dev.tiltrikt.orion.service.domain.follower.service.NodeService;
-import dev.tiltrikt.orion.service.domain.leader.handler.deregistration.DeregistrationHandler;
-import dev.tiltrikt.orion.service.domain.leader.handler.deregistration.DeregistrationHandlerImpl;
-import dev.tiltrikt.orion.service.domain.leader.handler.heartbeat.HeartbeatHandler;
-import dev.tiltrikt.orion.service.domain.leader.handler.heartbeat.HeartbeatHandlerImpl;
-import dev.tiltrikt.orion.service.domain.leader.handler.registration.RegistrationHandler;
-import dev.tiltrikt.orion.service.domain.leader.handler.registration.RegistrationHandlerImpl;
-import dev.tiltrikt.orion.service.domain.leader.job.LeaseExpirationCheckJob;
+import dev.tiltrikt.orion.service.common.publisher.ReplicationRegistryUpdatePublisher;
+import dev.tiltrikt.orion.service.domain.exception.InstanceNotFoundException;
+import dev.tiltrikt.orion.service.domain.handler.NodeHeartbeatHandler;
+import dev.tiltrikt.orion.service.domain.handler.NodeHeartbeatHandlerImpl;
+import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandler;
+import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandlerImpl;
+import dev.tiltrikt.orion.service.domain.handler.leader.deregistration.DeregistrationHandler;
+import dev.tiltrikt.orion.service.domain.handler.leader.deregistration.DeregistrationHandlerImpl;
+import dev.tiltrikt.orion.service.domain.handler.leader.heartbeat.HeartbeatHandler;
+import dev.tiltrikt.orion.service.domain.handler.leader.heartbeat.HeartbeatHandlerImpl;
+import dev.tiltrikt.orion.service.domain.handler.leader.registration.RegistrationHandler;
+import dev.tiltrikt.orion.service.domain.handler.leader.registration.RegistrationHandlerImpl;
+import dev.tiltrikt.orion.service.domain.job.LeaseExpirationCheckJob;
+import dev.tiltrikt.orion.service.domain.model.Node;
 import dev.tiltrikt.orion.service.domain.repository.InstanceRepository;
 import dev.tiltrikt.orion.service.domain.service.InstanceService;
 import dev.tiltrikt.orion.service.domain.service.InstanceServiceImpl;
-import dev.tiltrikt.orion.service.kafka.manager.KafkaConsumerManager;
+import dev.tiltrikt.orion.service.domain.service.NodeService;
+import dev.tiltrikt.orion.service.kafka.publisher.KafkaHeartbeatErrorPublisher;
 import dev.tiltrikt.orion.service.kafka.publisher.KafkaRegistryUpdatePublisher;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.listener.DefaultErrorHandler;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.util.backoff.BackOff;
+import org.springframework.util.backoff.FixedBackOff;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 public class OrionServiceAutoconfiguration {
-
-    @Bean
-    @NotNull ConsumerManager consumerManager(
-            @Qualifier("consumerConfigs") @NotNull Map<String, Object> consumerConfigs,
-            @NotNull RegistrationHandler registrationHandler,
-            @NotNull DeregistrationHandler deregistrationHandler,
-            @NotNull HeartbeatHandler heartbeatHandler,
-            @NotNull ReplicationHandler replicationHandler,
-            @NotNull NodeUpdateHandler nodeUpdateHandler,
-            @NotNull Node thisNode,
-            @NotNull KafkaListenerEndpointRegistry registry) {
-        return new KafkaConsumerManager(
-                consumerConfigs,
-                registrationHandler,
-                deregistrationHandler,
-                heartbeatHandler,
-                replicationHandler,
-                nodeUpdateHandler,
-                thisNode,
-                registry
-        );
-    }
 
     @Bean
     @NotNull Map<String, Object> consumerConfigs() {
@@ -69,6 +50,15 @@ public class OrionServiceAutoconfiguration {
         return props;
     }
 
+    @Bean
+    public DefaultErrorHandler errorHandler(@NotNull KafkaHeartbeatErrorPublisher errorPublisher) {
+        BackOff fixedBackOff = new FixedBackOff(1, 0);
+        return new DefaultErrorHandler((consumerRecord, exception) -> {
+            if (exception.getCause() instanceof InstanceNotFoundException) {
+                errorPublisher.publishError(((InstanceHeartbeatEvent) consumerRecord.value()).getInstanceId());
+            }
+        }, fixedBackOff);
+    }
 
     @Bean
     @NotNull Node nodeModel() {
@@ -82,8 +72,10 @@ public class OrionServiceAutoconfiguration {
     }
 
     @Bean
-    @NotNull InstanceService instanceService(@NotNull InstanceRepository instanceRepository) {
-        return new InstanceServiceImpl(instanceRepository);
+    @NotNull InstanceService instanceService(
+            @NotNull InstanceRepository instanceRepository,
+            @NotNull ReplicationRegistryUpdatePublisher replicationRegistryUpdatePublisher) {
+        return new InstanceServiceImpl(instanceRepository, replicationRegistryUpdatePublisher);
     }
 
     @Bean
@@ -120,8 +112,8 @@ public class OrionServiceAutoconfiguration {
     }
 
     @Bean
-    @NotNull NodeUpdateHandler nodeUpdateHandler(@NotNull NodeService nodeService) {
-        return new NodeUpdateHandlerImpl(nodeService);
+    @NotNull NodeHeartbeatHandler nodeUpdateHandler(@NotNull NodeService nodeService) {
+        return new NodeHeartbeatHandlerImpl(nodeService);
     }
 
 }

@@ -23,17 +23,17 @@ public class KafkaEventPublisher implements EventPublisher {
 
     @Override
     public void publishRegistration(@NotNull InstanceRegistrationEvent event) {
-        instanceRegistrationEventKafkaTemplate.send(KafkaTopicConfiguration.INSTANCE_REGISTRY_TOPIC, event);
+        instanceRegistrationEventKafkaTemplate.send(KafkaTopicConfiguration.INSTANCE_EVENT_TOPIC, event);
     }
 
     @Override
     public void publishDeregistration(@NotNull InstanceDeregistrationEvent event) {
-        instanceDeregistrationEventKafkaTemplate.send(KafkaTopicConfiguration.INSTANCE_REGISTRY_TOPIC, event);
+        instanceDeregistrationEventKafkaTemplate.send(KafkaTopicConfiguration.INSTANCE_EVENT_TOPIC, event);
     }
 
     @Override
     public void publishHeartbeat(@NotNull InstanceHeartbeatEvent event) {
-        instanceHeartbeatEventKafkaTemplate.send(KafkaTopicConfiguration.INSTANCE_REGISTRY_TOPIC, event);
+        instanceHeartbeatEventKafkaTemplate.send(KafkaTopicConfiguration.INSTANCE_EVENT_TOPIC, event);
     }
 
 }

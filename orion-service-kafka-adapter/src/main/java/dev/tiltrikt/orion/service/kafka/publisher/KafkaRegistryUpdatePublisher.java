@@ -17,11 +17,11 @@ public class KafkaRegistryUpdatePublisher implements RegistryUpdatePublisher {
 
     @Override
     public void publishRegistration(@NotNull String instanceId, @NotNull RegistryUpdateEvent event) {
-        registryUpdateEventKafkaTemplate.send(KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC, instanceId, event);
+        registryUpdateEventKafkaTemplate.send(KafkaTopicConfiguration.REGISTRY_TOPIC, instanceId, event);
     }
 
     @Override
     public void publishDeregistration(@NotNull String instanceId) {
-        registryUpdateEventKafkaTemplate.send(KafkaTopicConfiguration.FETCH_REGISTRY_TOPIC, instanceId, null);
+        registryUpdateEventKafkaTemplate.send(KafkaTopicConfiguration.REGISTRY_TOPIC, instanceId, null);
     }
 }

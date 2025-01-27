@@ -1,7 +1,7 @@
 package dev.tiltrikt.orion.service.kafka.consumer;
 
-import dev.tiltrikt.orion.common.event.ReplicationRegistryUpdateEvent;
-import dev.tiltrikt.orion.service.domain.follower.handler.replication.ReplicationHandler;
+import dev.tiltrikt.orion.common.event.ReplicationEvent;
+import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandler;
 import dev.tiltrikt.orion.service.domain.model.InstanceModel;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +12,11 @@ import org.springframework.kafka.listener.MessageListener;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class KafkaReplicationConsumer implements MessageListener<String, ReplicationRegistryUpdateEvent> {
+public class KafkaReplicationConsumer implements MessageListener<String, ReplicationEvent> {
 
     @NotNull ReplicationHandler replicationHandler;
 
-    public void receive(@NotNull ReplicationRegistryUpdateEvent event) {
+    public void receive(@NotNull ReplicationEvent event) {
         InstanceModel instanceModel = new InstanceModel(
                 event.getInstanceId(),
                 event.getServiceId(),
@@ -30,7 +30,7 @@ public class KafkaReplicationConsumer implements MessageListener<String, Replica
     }
 
     @Override
-    public void onMessage(@NotNull ConsumerRecord<String, ReplicationRegistryUpdateEvent> record) {
+    public void onMessage(@NotNull ConsumerRecord<String, ReplicationEvent> record) {
         receive(record.value());
     }
 }

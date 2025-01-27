@@ -1,19 +1,20 @@
-package dev.tiltrikt.orion.common.event;
+package dev.tiltrikt.orion.service.domain.model;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.jetbrains.annotations.NotNull;
+import lombok.experimental.NonFinal;
 
-@ToString
 @Getter
+@Setter
+@AllArgsConstructor
 @RequiredArgsConstructor
-@NoArgsConstructor(force = true)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class NodeHeartbeatEvent {
+public class Node {
 
     int id;
 
     int leaseDuration;
 
-    @NotNull String isLeader;
+    @NonFinal
+    boolean isLeader;
 }

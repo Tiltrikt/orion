@@ -2,10 +2,6 @@ spring:
   application:
     name: orion-service
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-
   kafka:
     producer:
       client-id: ${spring.application.name}

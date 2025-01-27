@@ -12,38 +12,34 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfiguration {
 
-    public static final String FETCH_REGISTRY_TOPIC = "fetch-registry";
-    public static final String REPLICATION_REGISTRY_TOPIC = "replication-registry";
-    public static final String NODE_REGISTRY_TOPIC = "node-registry";
-    public static final String INSTANCE_REGISTRY_TOPIC = "instance-registry";
+    public static final String REGISTRY_TOPIC = "fetch-registry";
+    public static final String REPLICATION_TOPIC = "data-replication";
+    public static final String NODE_EVENT_TOPIC = "node-event";
+    public static final String INSTANCE_EVENT_TOPIC = "instance-event";
+    public static final String HEARTBEAT_ERROR_TOPIC = "heartbeat-error";
 
     @Bean
-    @NotNull NewTopic instanceRegistry() {
+    @NotNull NewTopic heartbeatErrorTopic() {
         return TopicBuilder
-                .name(INSTANCE_REGISTRY_TOPIC)
+                .name(HEARTBEAT_ERROR_TOPIC)
                 .partitions(1)
                 .replicas(1)
                 .build();
     }
 
     @Bean
-    @NotNull NewTopic replicationRegistryTopic() {
+    @NotNull NewTopic instanceEventTopic() {
         return TopicBuilder
-                .name(REPLICATION_REGISTRY_TOPIC)
+                .name(INSTANCE_EVENT_TOPIC)
                 .partitions(1)
                 .replicas(1)
-                .compact()
-                .config(TopicConfig.MIN_COMPACTION_LAG_MS_CONFIG, "1")
-                .config(TopicConfig.MAX_COMPACTION_LAG_MS_CONFIG, "100")
-                .config(TopicConfig.MIN_CLEANABLE_DIRTY_RATIO_CONFIG, "0.001")
-                .config(TopicConfig.SEGMENT_MS_CONFIG, "10000")
                 .build();
     }
 
     @Bean
-    @NotNull NewTopic nodeRegistryTopic() {
+    @NotNull NewTopic replicationTopic() {
         return TopicBuilder
-                .name(NODE_REGISTRY_TOPIC)
+                .name(REPLICATION_TOPIC)
                 .partitions(1)
                 .replicas(1)
                 .compact()
@@ -55,9 +51,23 @@ public class KafkaTopicConfiguration {
     }
 
     @Bean
-    @NotNull NewTopic fetchRegistryTopic() {
+    @NotNull NewTopic nodeEventTopic() {
         return TopicBuilder
-                .name(FETCH_REGISTRY_TOPIC)
+                .name(NODE_EVENT_TOPIC)
+                .partitions(1)
+                .replicas(1)
+                .compact()
+                .config(TopicConfig.MIN_COMPACTION_LAG_MS_CONFIG, "1")
+                .config(TopicConfig.MAX_COMPACTION_LAG_MS_CONFIG, "100")
+                .config(TopicConfig.MIN_CLEANABLE_DIRTY_RATIO_CONFIG, "0.001")
+                .config(TopicConfig.SEGMENT_MS_CONFIG, "10000")
+                .build();
+    }
+
+    @Bean
+    @NotNull NewTopic registryTopic() {
+        return TopicBuilder
+                .name(REGISTRY_TOPIC)
                 .partitions(1)
                 .replicas(1)
                 .compact()

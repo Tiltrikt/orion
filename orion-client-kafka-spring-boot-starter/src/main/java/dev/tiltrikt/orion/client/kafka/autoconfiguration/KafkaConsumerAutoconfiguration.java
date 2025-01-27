@@ -42,8 +42,7 @@ public class KafkaConsumerAutoconfiguration {
         return factory;
     }
 
-    @Bean
-    @NotNull Map<String, Object> consumerConfigs() {
+    private @NotNull Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, orionKafkaConfigurationProperties.getBootstrapServers());
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -51,5 +50,4 @@ public class KafkaConsumerAutoconfiguration {
         props.put(JsonDeserializer.TRUSTED_PACKAGES, orionKafkaConfigurationProperties.getTrustedPackages());
         return props;
     }
-
 }
