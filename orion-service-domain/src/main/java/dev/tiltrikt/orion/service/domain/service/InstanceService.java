@@ -18,4 +18,6 @@ public interface InstanceService {
     void deleteAll(@NotNull List<InstanceModel> modelList);
 
     void deleteById(@NotNull String instanceId);
+
+    @NotNull List<InstanceModel> findAll();
 }

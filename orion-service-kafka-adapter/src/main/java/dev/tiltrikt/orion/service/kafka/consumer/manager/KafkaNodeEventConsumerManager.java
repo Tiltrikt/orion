@@ -47,6 +47,6 @@ public class KafkaNodeEventConsumerManager extends KafkaAbstractConsumerManager 
 
     @Override
     public void stopListening() {
-        stopContainer(KAFKA_NODE_EVENT_CONSUMER);
+        destroyContainer(KAFKA_NODE_EVENT_CONSUMER);
     }
 }

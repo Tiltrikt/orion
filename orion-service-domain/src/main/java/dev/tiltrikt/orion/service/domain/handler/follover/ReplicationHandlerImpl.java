@@ -17,4 +17,9 @@ public class ReplicationHandlerImpl implements ReplicationHandler {
     public void replicate(@NotNull InstanceModel model) {
         instanceService.save(model);
     }
+
+    @Override
+    public void deleteById(@NotNull String instanceId) {
+        instanceService.deleteById(instanceId);
+    }
 }

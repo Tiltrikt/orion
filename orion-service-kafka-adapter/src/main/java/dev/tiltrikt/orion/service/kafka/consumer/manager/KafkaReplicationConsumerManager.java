@@ -47,6 +47,6 @@ public class KafkaReplicationConsumerManager extends KafkaAbstractConsumerManage
 
     @Override
     public void stopListening() {
-        stopContainer(KAFKA_REPLICATION_CONSUMER);
+        destroyContainer(KAFKA_REPLICATION_CONSUMER);
     }
 }

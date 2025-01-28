@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.Instant;
 import java.util.Map;
 
+@ToString
 @Entity
 @Getter
 @Setter

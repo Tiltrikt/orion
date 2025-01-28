@@ -56,7 +56,13 @@ public class InstanceServiceImpl implements InstanceService {
 
     @Override
     public void deleteById(@NotNull String instanceId) {
+        registryUpdatePublisher.publishUpdate(instanceId, null);
         instanceRepository.deleteById(instanceId);
+    }
+
+    @Override
+    public @NotNull List<InstanceModel> findAll() {
+        return List.copyOf(instanceRepository.findAll());
     }
 
     @Override

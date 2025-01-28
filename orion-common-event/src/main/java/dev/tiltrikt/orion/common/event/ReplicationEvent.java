@@ -1,15 +1,13 @@
 package dev.tiltrikt.orion.common.event;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 import java.util.Map;
 
+@ToString
 @Getter
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)

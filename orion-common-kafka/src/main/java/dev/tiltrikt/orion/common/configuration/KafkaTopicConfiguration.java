@@ -56,11 +56,12 @@ public class KafkaTopicConfiguration {
                 .name(NODE_EVENT_TOPIC)
                 .partitions(1)
                 .replicas(1)
-                .compact()
+                .config(TopicConfig.CLEANUP_POLICY_CONFIG, "compact,delete")
                 .config(TopicConfig.MIN_COMPACTION_LAG_MS_CONFIG, "1")
                 .config(TopicConfig.MAX_COMPACTION_LAG_MS_CONFIG, "100")
                 .config(TopicConfig.MIN_CLEANABLE_DIRTY_RATIO_CONFIG, "0.001")
                 .config(TopicConfig.SEGMENT_MS_CONFIG, "10000")
+                .config(TopicConfig.RETENTION_MS_CONFIG, "30000")
                 .build();
     }
 
@@ -75,6 +76,7 @@ public class KafkaTopicConfiguration {
                 .config(TopicConfig.MAX_COMPACTION_LAG_MS_CONFIG, "100")
                 .config(TopicConfig.MIN_CLEANABLE_DIRTY_RATIO_CONFIG, "0.001")
                 .config(TopicConfig.SEGMENT_MS_CONFIG, "10000")
+                .config(TopicConfig.DELETE_RETENTION_MS_CONFIG, "60000")
                 .build();
     }
 }

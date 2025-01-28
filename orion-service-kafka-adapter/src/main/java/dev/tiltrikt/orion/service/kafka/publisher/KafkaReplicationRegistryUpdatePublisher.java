@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,7 @@ public class KafkaReplicationRegistryUpdatePublisher implements ReplicationRegis
     @NotNull Node thisNode;
 
     @Override
-    public void publishUpdate(@NotNull String instanceId, @NotNull ReplicationEvent event) {
+    public void publishUpdate(@NotNull String instanceId, @Nullable ReplicationEvent event) {
         if (thisNode.isLeader()) {
             kafkaTemplate.send(KafkaTopicConfiguration.REPLICATION_TOPIC, instanceId, event);
         }

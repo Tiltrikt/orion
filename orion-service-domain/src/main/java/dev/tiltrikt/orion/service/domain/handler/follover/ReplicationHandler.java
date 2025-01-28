@@ -6,4 +6,6 @@ import org.jetbrains.annotations.NotNull;
 public interface ReplicationHandler {
 
     void replicate(@NotNull InstanceModel model);
+
+    void deleteById(@NotNull String instanceId);
 }

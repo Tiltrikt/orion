@@ -57,6 +57,6 @@ public class KafkaInstanceEventConsumerManager extends KafkaAbstractConsumerMana
 
     @Override
     public void stopListening() {
-        stopContainer(KAFKA_INSTANCE_EVENT_CONSUMER);
+        destroyContainer(KAFKA_INSTANCE_EVENT_CONSUMER);
     }
 }

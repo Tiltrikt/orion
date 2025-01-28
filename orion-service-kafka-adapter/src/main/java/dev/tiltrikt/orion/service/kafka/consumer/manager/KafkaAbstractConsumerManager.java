@@ -22,10 +22,10 @@ public abstract class KafkaAbstractConsumerManager implements ConsumerManager {
 
     @NotNull Node thisNode;
 
-    protected void stopContainer(@NotNull String id) {
-        MessageListenerContainer oldContainer = kafkaListenerEndpointRegistry.getListenerContainer(id);
-        if (oldContainer != null && oldContainer.isRunning()) {
-            oldContainer.stop();
+    protected void destroyContainer(@NotNull String id) {
+        MessageListenerContainer messageListenerContainer = kafkaListenerEndpointRegistry.getListenerContainer(id);
+        if (messageListenerContainer != null) {
+            messageListenerContainer.destroy();
         }
     }
 
