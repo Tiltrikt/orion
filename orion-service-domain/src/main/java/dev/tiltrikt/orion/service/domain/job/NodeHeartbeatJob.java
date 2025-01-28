@@ -2,7 +2,7 @@ package dev.tiltrikt.orion.service.domain.job;
 
 import dev.tiltrikt.orion.common.event.NodeHeartbeatEvent;
 import dev.tiltrikt.orion.service.common.publisher.NodeEventPublisher;
-import dev.tiltrikt.orion.service.domain.model.Node;
+import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class NodeHeartbeatJob {
 
-    @NotNull Node thisNode;
+    @NotNull OrionServiceNode thisOrionServiceNode;
 
     @NotNull NodeEventPublisher nodeEventPublisher;
 
@@ -27,9 +27,9 @@ public class NodeHeartbeatJob {
     )
     public void execute() {
         NodeHeartbeatEvent event = new NodeHeartbeatEvent(
-                thisNode.getId(),
-                thisNode.getLeaseDuration(),
-                String.valueOf(thisNode.isLeader())
+                thisOrionServiceNode.getId(),
+                thisOrionServiceNode.getLeaseDuration(),
+                String.valueOf(thisOrionServiceNode.isLeader())
         );
         nodeEventPublisher.publishUpdate(event);
     }

@@ -4,6 +4,7 @@ import dev.tiltrikt.orion.common.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.common.event.ReplicationEvent;
 import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandler;
 import dev.tiltrikt.orion.service.domain.model.InstanceModel;
+import dev.tiltrikt.orion.service.domain.model.factory.InstanceModelFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -29,7 +30,8 @@ public class KafkaReplicationConsumer implements MessageListener<String, Replica
                 event.getPort(),
                 event.getMetadata(),
                 event.getLeaseDuration(),
-                event.getLeaseExpirationTime()
+                event.getLeaseExpirationTime(),
+                event.getInstanceState()
         );
         replicationHandler.replicate(instanceModel);
     }

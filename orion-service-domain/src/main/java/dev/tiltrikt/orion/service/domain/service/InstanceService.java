@@ -4,10 +4,13 @@ import dev.tiltrikt.orion.service.domain.model.InstanceModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface InstanceService {
 
     @NotNull List<InstanceModel> getAllExpired();
+
+    boolean existsById(@NotNull String instanceId);
 
     @NotNull InstanceModel getById(@NotNull String instanceId);
 

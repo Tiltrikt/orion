@@ -16,7 +16,8 @@ import dev.tiltrikt.orion.service.domain.handler.leader.heartbeat.HeartbeatHandl
 import dev.tiltrikt.orion.service.domain.handler.leader.registration.RegistrationHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.registration.RegistrationHandlerImpl;
 import dev.tiltrikt.orion.service.domain.job.LeaseExpirationCheckJob;
-import dev.tiltrikt.orion.service.domain.model.Node;
+import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
+import dev.tiltrikt.orion.service.domain.model.factory.InstanceModelFactory;
 import dev.tiltrikt.orion.service.domain.repository.InstanceRepository;
 import dev.tiltrikt.orion.service.domain.service.InstanceService;
 import dev.tiltrikt.orion.service.domain.service.InstanceServiceImpl;
@@ -61,9 +62,9 @@ public class OrionServiceAutoconfiguration {
     }
 
     @Bean
-    @NotNull Node nodeModel() {
+    @NotNull OrionServiceNode nodeModel() {
         int randomNumber = 1000 + (int) (Math.random() * 9000);
-        return new Node(randomNumber, 30, false);
+        return new OrionServiceNode(randomNumber, 30, false);
     }
 
     @Bean
@@ -95,15 +96,17 @@ public class OrionServiceAutoconfiguration {
     @Bean
     @NotNull HeartbeatHandler heartbeatHandler(
             @NotNull RegistryUpdatePublisher registryUpdatePublisher,
-            @NotNull InstanceService instanceService) {
-        return new HeartbeatHandlerImpl(instanceService, registryUpdatePublisher);
+            @NotNull InstanceService instanceService,
+            @NotNull InstanceModelFactory instanceModelFactory) {
+        return new HeartbeatHandlerImpl(instanceService, instanceModelFactory);
     }
 
     @Bean
     @NotNull LeaseExpirationCheckJob leaseExpirationCheckJob(
             @NotNull RegistryUpdatePublisher registryUpdatePublisher,
+            @NotNull ReplicationRegistryUpdatePublisher replicationRegistryUpdatePublisher,
             @NotNull InstanceService instanceService) {
-        return new LeaseExpirationCheckJob(registryUpdatePublisher, instanceService);
+        return new LeaseExpirationCheckJob(registryUpdatePublisher, replicationRegistryUpdatePublisher, instanceService);
     }
 
     @Bean

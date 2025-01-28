@@ -3,7 +3,7 @@ package dev.tiltrikt.orion.service.kafka.consumer.manager;
 import dev.tiltrikt.orion.common.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.common.event.NodeHeartbeatEvent;
 import dev.tiltrikt.orion.service.domain.handler.NodeHeartbeatHandler;
-import dev.tiltrikt.orion.service.domain.model.Node;
+import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import dev.tiltrikt.orion.service.kafka.consumer.KafkaNodeEventConsumer;
 import lombok.AccessLevel;
 import lombok.SneakyThrows;
@@ -26,9 +26,9 @@ public class KafkaNodeEventConsumerManager extends KafkaAbstractConsumerManager 
     public KafkaNodeEventConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
             @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
-            @NotNull Node thisNode,
+            @NotNull OrionServiceNode thisOrionServiceNode,
             @NotNull NodeHeartbeatHandler nodeHeartbeatHandler) {
-        super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory, thisNode);
+        super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory, thisOrionServiceNode);
         this.nodeHeartbeatHandler = nodeHeartbeatHandler;
     }
 
@@ -38,7 +38,7 @@ public class KafkaNodeEventConsumerManager extends KafkaAbstractConsumerManager 
         MethodKafkaListenerEndpoint<String, NodeHeartbeatEvent> kafkaListenerEndpoint = createDefaultMethodKafkaListenerEndpoint(
                 KafkaTopicConfiguration.NODE_EVENT_TOPIC,
                 KAFKA_NODE_EVENT_CONSUMER,
-                String.valueOf(thisNode.getId())
+                String.valueOf(thisOrionServiceNode.getId())
         );
         kafkaListenerEndpoint.setBean(new KafkaNodeEventConsumer(nodeHeartbeatHandler));
         kafkaListenerEndpoint.setMethod(KafkaNodeEventConsumer.class.getMethod("onMessage", ConsumerRecord.class));

@@ -1,15 +1,16 @@
 package dev.tiltrikt.orion.service.domain.handler.leader.heartbeat;
 
 import dev.tiltrikt.orion.common.event.RegistryUpdateEvent;
+import dev.tiltrikt.orion.common.instance.InstanceState;
 import dev.tiltrikt.orion.service.common.publisher.RegistryUpdatePublisher;
+import dev.tiltrikt.orion.service.domain.exception.InstanceNotFoundException;
 import dev.tiltrikt.orion.service.domain.model.InstanceModel;
+import dev.tiltrikt.orion.service.domain.model.factory.InstanceModelFactory;
 import dev.tiltrikt.orion.service.domain.service.InstanceService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
-
-import java.time.Instant;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -17,20 +18,19 @@ public class HeartbeatHandlerImpl implements HeartbeatHandler {
 
     @NotNull InstanceService instanceService;
 
-    @NotNull RegistryUpdatePublisher registryUpdatePublisher;
+    @NotNull InstanceModelFactory instanceModelFactory;
 
     @Override
     public void update(@NotNull String instanceId) {
-        InstanceModel instance = instanceService.getById(instanceId);
-        if (instance.getLeaseExpirationTime().isBefore(Instant.now())) {
-            RegistryUpdateEvent event = new RegistryUpdateEvent(
-                    instance.getServiceId(),
-                    instance.getHost(),
-                    instance.getPort(),
-                    instance.getMetadata()
-            );
-            registryUpdatePublisher.publishRegistration(instanceId, event);
+        if (!instanceService.existsById(instanceId)) {
+            InstanceModel instance = instanceModelFactory.createWithUnknownState(instanceId);
+            instanceService.save(instance);
+            throw new InstanceNotFoundException("Instance '%s' not exists", instanceId);
         }
-        instanceService.renewLicense(instanceId);
+
+        InstanceModel instance = instanceService.getById(instanceId);
+        if (instance.getState() == InstanceState.UP) {
+            instanceService.renewLicense(instanceId);
+        }
     }
 }

@@ -26,6 +26,7 @@ dependencyResolutionManagement {
 rootProject.name = 'orion'
 
 [
+        "orion-common",
         "orion-common-event",
         "orion-common-kafka",
 

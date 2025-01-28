@@ -3,7 +3,7 @@ package dev.tiltrikt.orion.service.kafka.publisher;
 import dev.tiltrikt.orion.common.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.common.event.ReplicationEvent;
 import dev.tiltrikt.orion.service.common.publisher.ReplicationRegistryUpdatePublisher;
-import dev.tiltrikt.orion.service.domain.model.Node;
+import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,11 +19,12 @@ public class KafkaReplicationRegistryUpdatePublisher implements ReplicationRegis
 
     @NotNull KafkaTemplate<String, ReplicationEvent> kafkaTemplate;
 
-    @NotNull Node thisNode;
+    @NotNull OrionServiceNode thisOrionServiceNode;
 
     @Override
     public void publishUpdate(@NotNull String instanceId, @Nullable ReplicationEvent event) {
-        if (thisNode.isLeader()) {
+        if (thisOrionServiceNode.isLeader()) {
+            System.out.println("Publishing replication update: " + event);
             kafkaTemplate.send(KafkaTopicConfiguration.REPLICATION_TOPIC, instanceId, event);
         }
     }

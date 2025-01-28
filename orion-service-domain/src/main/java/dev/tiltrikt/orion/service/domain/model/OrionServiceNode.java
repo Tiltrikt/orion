@@ -9,7 +9,7 @@ import lombok.experimental.NonFinal;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class Node {
+public class OrionServiceNode {
 
     int id;
 

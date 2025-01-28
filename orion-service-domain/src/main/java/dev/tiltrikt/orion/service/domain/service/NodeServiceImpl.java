@@ -68,6 +68,6 @@ public class NodeServiceImpl implements NodeService {
         NodeModel nodeModel = repository.findById(nodeId)
                 .orElseThrow(() -> new NodeException("Node '%s' not exists", nodeId));
         nodeModel.setLeaseExpirationTime(Instant.now().plusSeconds(nodeModel.getLeaseDuration()));
-        return repository.save(nodeModel);
+        return save(nodeModel);
     }
 }

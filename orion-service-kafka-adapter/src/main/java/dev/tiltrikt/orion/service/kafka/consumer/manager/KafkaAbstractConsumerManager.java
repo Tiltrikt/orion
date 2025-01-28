@@ -1,7 +1,7 @@
 package dev.tiltrikt.orion.service.kafka.consumer.manager;
 
 import dev.tiltrikt.orion.service.common.consumer.manager.ConsumerManager;
-import dev.tiltrikt.orion.service.domain.model.Node;
+import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,7 +20,7 @@ public abstract class KafkaAbstractConsumerManager implements ConsumerManager {
 
     @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory;
 
-    @NotNull Node thisNode;
+    @NotNull OrionServiceNode thisOrionServiceNode;
 
     protected void destroyContainer(@NotNull String id) {
         MessageListenerContainer messageListenerContainer = kafkaListenerEndpointRegistry.getListenerContainer(id);

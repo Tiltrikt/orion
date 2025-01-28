@@ -7,6 +7,7 @@ import dev.tiltrikt.orion.service.domain.handler.leader.deregistration.Deregistr
 import dev.tiltrikt.orion.service.domain.handler.leader.heartbeat.HeartbeatHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.registration.RegistrationHandler;
 import dev.tiltrikt.orion.service.domain.model.InstanceModel;
+import dev.tiltrikt.orion.service.domain.model.factory.InstanceModelFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,15 +27,16 @@ public class KafkaInstanceEventConsumer implements MessageListener<String, Objec
 
     @NotNull HeartbeatHandler heartbeatHandler;
 
+    @NotNull InstanceModelFactory instanceModelFactory;
+
     public void register(@NotNull InstanceRegistrationEvent instanceRegistrationEvent) {
-        InstanceModel instanceModel = new InstanceModel(
+        InstanceModel instanceModel = instanceModelFactory.create(
                 instanceRegistrationEvent.getInstanceId(),
                 instanceRegistrationEvent.getServiceId(),
                 instanceRegistrationEvent.getHost(),
                 instanceRegistrationEvent.getPort(),
                 instanceRegistrationEvent.getMetadata(),
-                instanceRegistrationEvent.getLeaseDuration(),
-                Instant.now().plusSeconds(instanceRegistrationEvent.getLeaseDuration())
+                instanceRegistrationEvent.getLeaseDuration()
         );
         registrationHandler.register(instanceModel);
     }

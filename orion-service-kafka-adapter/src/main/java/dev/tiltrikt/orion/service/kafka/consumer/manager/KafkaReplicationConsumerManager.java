@@ -3,7 +3,7 @@ package dev.tiltrikt.orion.service.kafka.consumer.manager;
 import dev.tiltrikt.orion.common.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.common.event.ReplicationEvent;
 import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandler;
-import dev.tiltrikt.orion.service.domain.model.Node;
+import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import dev.tiltrikt.orion.service.kafka.consumer.KafkaReplicationConsumer;
 import lombok.AccessLevel;
 import lombok.SneakyThrows;
@@ -26,9 +26,9 @@ public class KafkaReplicationConsumerManager extends KafkaAbstractConsumerManage
     public KafkaReplicationConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
             @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
-            @NotNull Node thisNode,
+            @NotNull OrionServiceNode thisOrionServiceNode,
             @NotNull ReplicationHandler replicationHandler) {
-        super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory, thisNode);
+        super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory, thisOrionServiceNode);
         this.replicationHandler = replicationHandler;
     }
 
@@ -38,7 +38,7 @@ public class KafkaReplicationConsumerManager extends KafkaAbstractConsumerManage
         MethodKafkaListenerEndpoint<String, ReplicationEvent> kafkaListenerEndpoint = createDefaultMethodKafkaListenerEndpoint(
                 KafkaTopicConfiguration.REPLICATION_TOPIC,
                 KAFKA_REPLICATION_CONSUMER,
-                String.valueOf(thisNode.getId())
+                String.valueOf(thisOrionServiceNode.getId())
         );
         kafkaListenerEndpoint.setBean(new KafkaReplicationConsumer(replicationHandler));
         kafkaListenerEndpoint.setMethod(KafkaReplicationConsumer.class.getMethod("onMessage", ConsumerRecord.class));

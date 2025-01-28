@@ -4,7 +4,8 @@ import dev.tiltrikt.orion.common.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.service.domain.handler.leader.deregistration.DeregistrationHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.heartbeat.HeartbeatHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.registration.RegistrationHandler;
-import dev.tiltrikt.orion.service.domain.model.Node;
+import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
+import dev.tiltrikt.orion.service.domain.model.factory.InstanceModelFactory;
 import dev.tiltrikt.orion.service.kafka.consumer.KafkaInstanceEventConsumer;
 import lombok.AccessLevel;
 import lombok.SneakyThrows;
@@ -28,18 +29,22 @@ public class KafkaInstanceEventConsumerManager extends KafkaAbstractConsumerMana
 
     @NotNull HeartbeatHandler heartbeatHandler;
 
+    @NotNull InstanceModelFactory instanceModelFactory;
+
     public KafkaInstanceEventConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
             @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
-            @NotNull Node thisNode,
+            @NotNull OrionServiceNode thisOrionServiceNode,
             @NotNull RegistrationHandler registrationHandler,
             @NotNull DeregistrationHandler deregistrationHandler,
-            @NotNull HeartbeatHandler heartbeatHandler
+            @NotNull HeartbeatHandler heartbeatHandler,
+            @NotNull InstanceModelFactory instanceModelFactory
     ) {
-        super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory, thisNode);
+        super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory, thisOrionServiceNode);
         this.registrationHandler = registrationHandler;
         this.deregistrationHandler = deregistrationHandler;
         this.heartbeatHandler = heartbeatHandler;
+        this.instanceModelFactory = instanceModelFactory;
     }
 
     @Override
@@ -50,7 +55,7 @@ public class KafkaInstanceEventConsumerManager extends KafkaAbstractConsumerMana
                 KAFKA_INSTANCE_EVENT_CONSUMER,
                 "orion-service"
         );
-        kafkaListenerEndpoint.setBean(new KafkaInstanceEventConsumer(registrationHandler, deregistrationHandler, heartbeatHandler));
+        kafkaListenerEndpoint.setBean(new KafkaInstanceEventConsumer(registrationHandler, deregistrationHandler, heartbeatHandler, instanceModelFactory));
         kafkaListenerEndpoint.setMethod(KafkaInstanceEventConsumer.class.getMethod("onMessage", ConsumerRecord.class));
         kafkaListenerEndpointRegistry.registerListenerContainer(kafkaListenerEndpoint, kafkaListenerContainerFactory, true);
     }

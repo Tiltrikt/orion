@@ -1,5 +1,6 @@
 package dev.tiltrikt.orion.common.event;
 
+import dev.tiltrikt.orion.common.instance.InstanceState;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +27,8 @@ public class ReplicationEvent {
 
     @NotNull Map<String, String> metadata;
     @NotNull Instant leaseExpirationTime;
+
+    @NotNull InstanceState instanceState;
 
     public @NotNull String getInstanceId() {
         return host + ":" + port;

@@ -1,5 +1,6 @@
 package dev.tiltrikt.orion.service.domain.model;
 
+import dev.tiltrikt.orion.common.instance.InstanceState;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -14,9 +15,10 @@ import java.util.Map;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "instance")
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
 @SuppressWarnings({"JpaDataSourceORMInspection", "RedundantSuppression"})
 public class InstanceModel {
@@ -38,6 +40,8 @@ public class InstanceModel {
 
     int leaseDuration;
 
-    @NonFinal
     @NotNull Instant leaseExpirationTime;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull InstanceState state;
 }

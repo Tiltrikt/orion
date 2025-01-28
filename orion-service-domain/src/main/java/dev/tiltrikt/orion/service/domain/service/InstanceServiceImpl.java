@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Unmodifiable;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -26,6 +27,11 @@ public class InstanceServiceImpl implements InstanceService {
     @Unmodifiable
     public @NotNull List<InstanceModel> getAllExpired() {
         return List.copyOf(instanceRepository.findAllByLeaseExpirationTimeBefore(Instant.now()));
+    }
+
+    @Override
+    public boolean existsById(@NotNull String instanceId) {
+        return instanceRepository.existsById(instanceId);
     }
 
     @Override
@@ -43,7 +49,8 @@ public class InstanceServiceImpl implements InstanceService {
                 instanceModel.getPort(),
                 instanceModel.getLeaseDuration(),
                 instanceModel.getMetadata(),
-                instanceModel.getLeaseExpirationTime()
+                instanceModel.getLeaseExpirationTime(),
+                instanceModel.getState()
         );
         registryUpdatePublisher.publishUpdate(instanceModel.getId(), event);
         return instanceRepository.save(instanceModel);
@@ -70,6 +77,6 @@ public class InstanceServiceImpl implements InstanceService {
         InstanceModel instanceModel = instanceRepository.findById(instanceId)
                 .orElseThrow(() -> new InstanceNotFoundException("Instance '%s' not exists", instanceId));
         instanceModel.setLeaseExpirationTime(Instant.now().plusSeconds(instanceModel.getLeaseDuration()));
-        return instanceRepository.save(instanceModel);
+        return save(instanceModel);
     }
 }
