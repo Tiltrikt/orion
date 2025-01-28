@@ -5,6 +5,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @EnableScheduling
-public class JobConfiguration {
+public class LeaseExpirationJobConfiguration {
 
 }

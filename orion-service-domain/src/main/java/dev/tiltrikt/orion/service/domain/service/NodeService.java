@@ -23,4 +23,6 @@ public interface NodeService {
     @NotNull NodeModel chooseLeader();
 
     @NotNull Optional<NodeModel> getLeader();
+
+    boolean existsLeader();
 }

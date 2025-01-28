@@ -64,6 +64,11 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
+    public boolean existsLeader() {
+        return getLeader().isPresent();
+    }
+
+    @Override
     public @NotNull NodeModel renewLicense(int nodeId) {
         NodeModel nodeModel = repository.findById(nodeId)
                 .orElseThrow(() -> new NodeException("Node '%s' not exists", nodeId));

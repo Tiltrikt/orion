@@ -1,3 +1,4 @@
 dependencies {
     api project(":orion-common-event")
+    implementation "org.springframework:spring-context:7.0.0-M1"
 }

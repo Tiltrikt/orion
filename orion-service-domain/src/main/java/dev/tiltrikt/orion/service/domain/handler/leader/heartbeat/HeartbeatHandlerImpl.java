@@ -1,8 +1,6 @@
 package dev.tiltrikt.orion.service.domain.handler.leader.heartbeat;
 
-import dev.tiltrikt.orion.common.event.RegistryUpdateEvent;
 import dev.tiltrikt.orion.common.instance.InstanceState;
-import dev.tiltrikt.orion.service.common.publisher.RegistryUpdatePublisher;
 import dev.tiltrikt.orion.service.domain.exception.InstanceNotFoundException;
 import dev.tiltrikt.orion.service.domain.model.InstanceModel;
 import dev.tiltrikt.orion.service.domain.model.factory.InstanceModelFactory;

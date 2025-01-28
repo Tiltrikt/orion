@@ -8,13 +8,12 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class LeaseExpirationCheckJob {
+public class LeaseExpirationCheckJob implements Runnable {
 
     @NotNull RegistryUpdatePublisher registryUpdatePublisher;
 
@@ -22,8 +21,8 @@ public class LeaseExpirationCheckJob {
 
     @NotNull InstanceService instanceService;
 
-    @Scheduled(fixedRate = 5000)
-    public void execute() {
+    @Override
+    public void run() {
         List<InstanceModel> instanceModelList = instanceService.getAllExpired();
         instanceService.deleteAll(instanceModelList);
         for (InstanceModel instanceModel : instanceModelList) {

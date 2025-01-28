@@ -15,8 +15,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.kafka.listener.MessageListener;
 
-import java.time.Instant;
-
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class KafkaInstanceEventConsumer implements MessageListener<String, Object> {

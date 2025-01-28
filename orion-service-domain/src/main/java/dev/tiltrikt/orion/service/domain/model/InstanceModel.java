@@ -4,7 +4,6 @@ import dev.tiltrikt.orion.common.instance.InstanceState;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
