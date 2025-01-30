@@ -15,6 +15,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.TaskScheduler;
 
 import java.time.Duration;
+import java.time.Instant;
+import java.util.Date;
 import java.util.concurrent.ScheduledFuture;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -41,7 +43,11 @@ public class LeaseExpirationCheckJobManager {
     @EventListener
     public void becomeLeader(@NotNull BecomeLeaderEvent event) {
         if (scheduledTask == null || scheduledTask.isCancelled()) {
-            scheduledTask = taskScheduler.scheduleAtFixedRate(leaseExpirationCheckJob, Duration.ofSeconds(10));
+            scheduledTask = taskScheduler.scheduleAtFixedRate(
+                    leaseExpirationCheckJob,
+                    Instant.now().plusSeconds(10),
+                    Duration.ofSeconds(10)
+            );
         }
     }
 
