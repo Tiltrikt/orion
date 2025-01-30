@@ -9,13 +9,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "dev.tiltrikt.orion.service.domain.repository")
 public class RepositoryConfiguration {
 
-    //    @Bean
-//    @NotNull DataSource dataSource() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("org.h2.Driver");
-//        dataSource.setUrl("jdbc:h2:mem:orion");
-//        dataSource.setUsername("dev");
-//        dataSource.setPassword("dev");
-//        return dataSource;
-//    }
 }
