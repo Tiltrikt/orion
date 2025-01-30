@@ -9,14 +9,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
-import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-@Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @SuppressWarnings("OptionalGetWithoutIsPresent")

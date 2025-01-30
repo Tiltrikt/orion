@@ -13,9 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.config.MethodKafkaListenerEndpoint;
-import org.springframework.stereotype.Component;
 
-@Component
 @FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
 public class KafkaNodeEventConsumerManager extends KafkaAbstractConsumerManager {
 

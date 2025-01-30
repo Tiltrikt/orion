@@ -10,9 +10,7 @@ import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
 
-@Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class KafkaReplicationRegistryUpdatePublisher implements ReplicationRegistryUpdatePublisher {

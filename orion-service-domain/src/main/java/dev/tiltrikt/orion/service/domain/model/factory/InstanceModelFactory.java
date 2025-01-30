@@ -3,13 +3,11 @@ package dev.tiltrikt.orion.service.domain.model.factory;
 import dev.tiltrikt.orion.common.instance.InstanceState;
 import dev.tiltrikt.orion.service.domain.model.InstanceModel;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 public class InstanceModelFactory {
 
     public @NotNull InstanceModel create(
