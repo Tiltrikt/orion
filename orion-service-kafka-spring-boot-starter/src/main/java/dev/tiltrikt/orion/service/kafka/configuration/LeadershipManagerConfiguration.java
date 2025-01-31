@@ -5,11 +5,8 @@ import dev.tiltrikt.orion.service.common.consumer.manager.ConsumerManager;
 import dev.tiltrikt.orion.service.common.publisher.RegistryUpdatePublisher;
 import dev.tiltrikt.orion.service.common.publisher.ReplicationRegistryUpdatePublisher;
 import dev.tiltrikt.orion.service.domain.job.manager.LeaseExpirationCheckJobManager;
-import dev.tiltrikt.orion.service.domain.leadership.LeadershipManager;
-import dev.tiltrikt.orion.service.domain.leadership.LeadershipManagerImpl;
 import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import dev.tiltrikt.orion.service.domain.service.InstanceService;
-import dev.tiltrikt.orion.service.domain.service.NodeService;
 import dev.tiltrikt.orion.service.kafka.consumer.manager.KafkaConsumerLeadershipManager;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,18 +43,5 @@ public class LeadershipManagerConfiguration {
             @NotNull ConsumerManager replicationConsumerManager
     ) {
         return new KafkaConsumerLeadershipManager(instanceEventConsumerManager, replicationConsumerManager);
-    }
-
-    @Bean
-    @NotNull LeadershipManager leadershipManager(
-            @NotNull OrionServiceNode thisOrionServiceNode,
-            @NotNull ApplicationEventPublisher applicationEventPublisher,
-            @NotNull NodeService nodeService
-    ) {
-        return new LeadershipManagerImpl(
-                thisOrionServiceNode,
-                applicationEventPublisher,
-                nodeService
-        );
     }
 }

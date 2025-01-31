@@ -21,13 +21,16 @@ public class KafkaReplicationConsumerManager extends KafkaAbstractConsumerManage
 
     @NotNull ReplicationHandler replicationHandler;
 
+    @NotNull OrionServiceNode thisOrionServiceNode;
+
     public KafkaReplicationConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
             @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
-            @NotNull OrionServiceNode thisOrionServiceNode,
-            @NotNull ReplicationHandler replicationHandler) {
-        super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory, thisOrionServiceNode);
+            @NotNull ReplicationHandler replicationHandler,
+            @NotNull OrionServiceNode thisOrionServiceNode) {
+        super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory);
         this.replicationHandler = replicationHandler;
+        this.thisOrionServiceNode = thisOrionServiceNode;
     }
 
     @Override

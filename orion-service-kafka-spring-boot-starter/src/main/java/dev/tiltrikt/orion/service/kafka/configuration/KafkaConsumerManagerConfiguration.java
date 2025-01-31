@@ -4,7 +4,9 @@ import dev.tiltrikt.orion.common.event.InstanceHeartbeatEvent;
 import dev.tiltrikt.orion.service.common.consumer.manager.ConsumerManager;
 import dev.tiltrikt.orion.service.common.publisher.HeartbeatErrorPublisher;
 import dev.tiltrikt.orion.service.domain.exception.InstanceNotFoundException;
-import dev.tiltrikt.orion.service.domain.handler.NodeHeartbeatHandler;
+import dev.tiltrikt.orion.service.domain.handler.raft.CandidateRequestHandler;
+import dev.tiltrikt.orion.service.domain.handler.raft.LeaderHeartbeatHandler;
+import dev.tiltrikt.orion.service.domain.handler.raft.VoteRequestHandler;
 import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.deregistration.DeregistrationHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.heartbeat.HeartbeatHandler;
@@ -30,7 +32,6 @@ public class KafkaConsumerManagerConfiguration {
     @NotNull ConsumerManager kafkaInstanceEventConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
             @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
-            @NotNull OrionServiceNode thisOrionServiceNode,
             @NotNull RegistrationHandler registrationHandler,
             @NotNull DeregistrationHandler deregistrationHandler,
             @NotNull HeartbeatHandler heartbeatHandler,
@@ -39,7 +40,6 @@ public class KafkaConsumerManagerConfiguration {
         return new KafkaInstanceEventConsumerManager(
                 kafkaListenerEndpointRegistry,
                 kafkaListenerContainerFactory,
-                thisOrionServiceNode,
                 registrationHandler,
                 deregistrationHandler,
                 heartbeatHandler,
@@ -52,13 +52,17 @@ public class KafkaConsumerManagerConfiguration {
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
             @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
             @NotNull OrionServiceNode thisOrionServiceNode,
-            @NotNull NodeHeartbeatHandler nodeHeartbeatHandler
+            @NotNull CandidateRequestHandler candidateRequestHandler,
+            @NotNull LeaderHeartbeatHandler leaderHeartbeatHandler,
+            @NotNull VoteRequestHandler voteRequestHandler
     ) {
         return new KafkaNodeEventConsumerManager(
                 kafkaListenerEndpointRegistry,
                 kafkaListenerContainerFactory,
-                thisOrionServiceNode,
-                nodeHeartbeatHandler
+                candidateRequestHandler,
+                leaderHeartbeatHandler,
+                voteRequestHandler,
+                thisOrionServiceNode
         );
     }
 
@@ -72,8 +76,8 @@ public class KafkaConsumerManagerConfiguration {
         return new KafkaReplicationConsumerManager(
                 kafkaListenerEndpointRegistry,
                 kafkaListenerContainerFactory,
-                thisOrionServiceNode,
-                replicationHandler
+                replicationHandler,
+                thisOrionServiceNode
         );
     }
 

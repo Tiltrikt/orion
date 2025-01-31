@@ -1,7 +1,7 @@
 dependencies {
     api "org.springframework.boot:spring-boot-starter"
 
-    api project(":orion-service-domain")
+    api project(":orion-service-domain-state")
     api project(":orion-service-common")
     api project(":orion-common-kafka")
 }

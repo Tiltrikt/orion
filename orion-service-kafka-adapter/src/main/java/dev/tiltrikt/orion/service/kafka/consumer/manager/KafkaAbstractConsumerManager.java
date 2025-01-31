@@ -20,8 +20,6 @@ public abstract class KafkaAbstractConsumerManager implements ConsumerManager {
 
     @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory;
 
-    @NotNull OrionServiceNode thisOrionServiceNode;
-
     protected void destroyContainer(@NotNull String id) {
         MessageListenerContainer messageListenerContainer = kafkaListenerEndpointRegistry.getListenerContainer(id);
         if (messageListenerContainer != null) {

@@ -11,6 +11,6 @@ public class OrionServiceNodeConfiguration {
     @Bean
     @NotNull OrionServiceNode nodeModel() {
         int randomNumber = 1000 + (int) (Math.random() * 9000);
-        return new OrionServiceNode(randomNumber, 30, false);
+        return new OrionServiceNode(randomNumber, false, 1);
     }
 }

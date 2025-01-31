@@ -1,8 +1,6 @@
 package dev.tiltrikt.orion.service.kafka.configuration;
 
 import dev.tiltrikt.orion.service.common.publisher.RegistryUpdatePublisher;
-import dev.tiltrikt.orion.service.domain.handler.NodeHeartbeatHandler;
-import dev.tiltrikt.orion.service.domain.handler.NodeHeartbeatHandlerImpl;
 import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandler;
 import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandlerImpl;
 import dev.tiltrikt.orion.service.domain.handler.leader.deregistration.DeregistrationHandler;
@@ -13,7 +11,6 @@ import dev.tiltrikt.orion.service.domain.handler.leader.registration.Registratio
 import dev.tiltrikt.orion.service.domain.handler.leader.registration.RegistrationHandlerImpl;
 import dev.tiltrikt.orion.service.domain.model.factory.InstanceModelFactory;
 import dev.tiltrikt.orion.service.domain.service.InstanceService;
-import dev.tiltrikt.orion.service.domain.service.NodeService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,10 +42,5 @@ public class HandlerConfiguration {
     @Bean
     @NotNull ReplicationHandler replicationHandler(@NotNull InstanceService instanceService) {
         return new ReplicationHandlerImpl(instanceService);
-    }
-
-    @Bean
-    @NotNull NodeHeartbeatHandler nodeHeartbeatHandler(@NotNull NodeService nodeService) {
-        return new NodeHeartbeatHandlerImpl(nodeService);
     }
 }

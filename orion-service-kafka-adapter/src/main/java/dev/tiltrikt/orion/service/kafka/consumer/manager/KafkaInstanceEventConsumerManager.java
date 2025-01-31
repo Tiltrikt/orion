@@ -4,7 +4,6 @@ import dev.tiltrikt.orion.common.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.service.domain.handler.leader.deregistration.DeregistrationHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.heartbeat.HeartbeatHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.registration.RegistrationHandler;
-import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import dev.tiltrikt.orion.service.domain.model.factory.InstanceModelFactory;
 import dev.tiltrikt.orion.service.kafka.consumer.KafkaInstanceEventConsumer;
 import lombok.AccessLevel;
@@ -32,13 +31,12 @@ public class KafkaInstanceEventConsumerManager extends KafkaAbstractConsumerMana
     public KafkaInstanceEventConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
             @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
-            @NotNull OrionServiceNode thisOrionServiceNode,
             @NotNull RegistrationHandler registrationHandler,
             @NotNull DeregistrationHandler deregistrationHandler,
             @NotNull HeartbeatHandler heartbeatHandler,
             @NotNull InstanceModelFactory instanceModelFactory
     ) {
-        super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory, thisOrionServiceNode);
+        super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory);
         this.registrationHandler = registrationHandler;
         this.deregistrationHandler = deregistrationHandler;
         this.heartbeatHandler = heartbeatHandler;

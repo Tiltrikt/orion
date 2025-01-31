@@ -1,5 +1,4 @@
 dev.tiltrikt.orion.service.kafka.configuration.HandlerConfiguration
-dev.tiltrikt.orion.service.kafka.configuration.JobConfiguration
 dev.tiltrikt.orion.service.kafka.configuration.KafkaConsumerManagerConfiguration
 dev.tiltrikt.orion.service.kafka.configuration.KafkaPublisherConfiguration
 dev.tiltrikt.orion.service.kafka.configuration.LeadershipManagerConfiguration

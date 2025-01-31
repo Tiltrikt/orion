@@ -2,8 +2,6 @@ package dev.tiltrikt.orion.service.kafka.consumer.manager;
 
 import dev.tiltrikt.orion.service.common.consumer.manager.ConsumerLeadershipManager;
 import dev.tiltrikt.orion.service.common.consumer.manager.ConsumerManager;
-import dev.tiltrikt.orion.service.common.event.BecomeFollowerEvent;
-import dev.tiltrikt.orion.service.common.event.BecomeLeaderEvent;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,15 +20,13 @@ public class KafkaConsumerLeadershipManager implements ConsumerLeadershipManager
     @NotNull ConsumerManager replicationConsumerManager;
 
     @Override
-    @EventListener
-    public void becomeLeader(@NotNull BecomeLeaderEvent event) {
+    public void becomeLeader() {
         replicationConsumerManager.stopListening();
         instanceEventConsumerManager.startListening();
     }
 
     @Override
-    @EventListener
-    public void becomeFollower(@NotNull BecomeFollowerEvent event) {
+    public void becomeFollower() {
         instanceEventConsumerManager.stopListening();
         replicationConsumerManager.startListening();
     }

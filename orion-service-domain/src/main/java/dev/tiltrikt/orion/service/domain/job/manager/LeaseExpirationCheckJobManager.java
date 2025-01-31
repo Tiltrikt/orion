@@ -1,7 +1,5 @@
 package dev.tiltrikt.orion.service.domain.job.manager;
 
-import dev.tiltrikt.orion.service.common.event.BecomeFollowerEvent;
-import dev.tiltrikt.orion.service.common.event.BecomeLeaderEvent;
 import dev.tiltrikt.orion.service.common.publisher.RegistryUpdatePublisher;
 import dev.tiltrikt.orion.service.common.publisher.ReplicationRegistryUpdatePublisher;
 import dev.tiltrikt.orion.service.domain.job.LeaseExpirationCheckJob;
@@ -16,7 +14,6 @@ import org.springframework.scheduling.TaskScheduler;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Date;
 import java.util.concurrent.ScheduledFuture;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

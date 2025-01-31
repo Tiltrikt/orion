@@ -1,7 +1,5 @@
 package dev.tiltrikt.orion.service.domain.model;
 
-import dev.tiltrikt.orion.service.common.event.BecomeFollowerEvent;
-import dev.tiltrikt.orion.service.common.event.BecomeLeaderEvent;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;

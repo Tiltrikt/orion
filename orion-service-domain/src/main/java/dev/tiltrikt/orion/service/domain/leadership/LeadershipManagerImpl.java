@@ -1,6 +1,5 @@
 package dev.tiltrikt.orion.service.domain.leadership;
 
-import dev.tiltrikt.orion.service.common.event.BecomeLeaderEvent;
 import dev.tiltrikt.orion.service.domain.model.NodeModel;
 import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import dev.tiltrikt.orion.service.domain.service.NodeService;
