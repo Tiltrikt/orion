@@ -1,0 +1,25 @@
+{
+  "groups": [
+    {
+      "name": "orion.service",
+      "type": "dev.tiltrikt.orion.service.kafka.configuration.OrionServiceConfigurationProperties",
+      "sourceType": "dev.tiltrikt.orion.service.kafka.configuration.OrionServiceConfigurationProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "orion.service.node-id",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.tiltrikt.orion.service.kafka.configuration.OrionServiceConfigurationProperties",
+      "description": "The unique identifier for the Orion node, used to differentiate nodes within the cluster."
+    },
+    {
+      "name": "orion.service.cluster-size",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.tiltrikt.orion.service.kafka.configuration.OrionServiceConfigurationProperties",
+      "description": "The size of the Orion service cluster, indicating the number of nodes within the cluster.",
+      "defaultValue": 1
+    }
+  ],
+  "hints": []
+}

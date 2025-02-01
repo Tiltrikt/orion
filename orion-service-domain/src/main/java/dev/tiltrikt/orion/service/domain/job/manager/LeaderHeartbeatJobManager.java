@@ -9,12 +9,10 @@ import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.scheduling.TaskScheduler;
-import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.concurrent.ScheduledFuture;
 
-@Component
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LeaderHeartbeatJobManager {
 

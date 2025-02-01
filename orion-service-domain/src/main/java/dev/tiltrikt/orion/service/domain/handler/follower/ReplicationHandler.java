@@ -1,4 +1,4 @@
-package dev.tiltrikt.orion.service.domain.handler.follover;
+package dev.tiltrikt.orion.service.domain.handler.follower;
 
 import dev.tiltrikt.orion.service.domain.model.InstanceModel;
 import org.jetbrains.annotations.NotNull;

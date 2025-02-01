@@ -4,12 +4,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class VoteCounterServiceImpl implements VoteCounterService {

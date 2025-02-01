@@ -14,10 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
-import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BecomeCandidateAction implements Action<States, Events> {

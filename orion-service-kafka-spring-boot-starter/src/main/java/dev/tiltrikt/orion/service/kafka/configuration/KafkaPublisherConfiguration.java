@@ -2,13 +2,12 @@ package dev.tiltrikt.orion.service.kafka.configuration;
 
 import dev.tiltrikt.orion.common.event.RegistryUpdateEvent;
 import dev.tiltrikt.orion.common.event.ReplicationEvent;
-import dev.tiltrikt.orion.service.common.publisher.HeartbeatErrorPublisher;
-import dev.tiltrikt.orion.service.common.publisher.RegistryUpdatePublisher;
-import dev.tiltrikt.orion.service.common.publisher.ReplicationRegistryUpdatePublisher;
+import dev.tiltrikt.orion.service.common.event.CandidateRequestEvent;
+import dev.tiltrikt.orion.service.common.event.LeaderHeartbeatEvent;
+import dev.tiltrikt.orion.service.common.event.VoteEvent;
+import dev.tiltrikt.orion.service.common.publisher.*;
 import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
-import dev.tiltrikt.orion.service.kafka.publisher.KafkaHeartbeatErrorPublisher;
-import dev.tiltrikt.orion.service.kafka.publisher.KafkaRegistryUpdatePublisher;
-import dev.tiltrikt.orion.service.kafka.publisher.KafkaReplicationRegistryUpdatePublisher;
+import dev.tiltrikt.orion.service.kafka.publisher.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,5 +32,28 @@ public class KafkaPublisherConfiguration {
             @NotNull OrionServiceNode thisOrionServiceNode
     ) {
         return new KafkaReplicationRegistryUpdatePublisher(kafkaTemplate, thisOrionServiceNode);
+    }
+
+    @Bean
+    @NotNull VotePublisher votePublisher(
+            @NotNull KafkaTemplate<String, VoteEvent> kafkaTemplate,
+            @NotNull OrionServiceNode thisOrionServiceNode) {
+        return new KafkaVotePublisher(kafkaTemplate, thisOrionServiceNode);
+    }
+
+    @Bean
+    @NotNull LeaderHeartbeatPublisher leaderHeartbeatPublisher(
+            @NotNull KafkaTemplate<String, LeaderHeartbeatEvent> kafkaTemplate,
+            @NotNull OrionServiceNode thisOrionServiceNode
+    ) {
+        return new KafkaLeaderHeartbeatPublisher(kafkaTemplate, thisOrionServiceNode);
+    }
+
+    @Bean
+    CandidateRequestPublisher candidateRequestPublisher(
+            @NotNull KafkaTemplate<String, CandidateRequestEvent> kafkaTemplate,
+            @NotNull OrionServiceNode thisOrionServiceNode
+    ) {
+        return new KafkaCandidateRequestPublisher(kafkaTemplate, thisOrionServiceNode);
     }
 }
