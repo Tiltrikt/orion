@@ -4,9 +4,10 @@ import dev.tiltrikt.orion.common.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.service.common.event.CandidateRequestEvent;
 import dev.tiltrikt.orion.service.common.event.LeaderHeartbeatEvent;
 import dev.tiltrikt.orion.service.common.event.VoteEvent;
-import dev.tiltrikt.orion.service.domain.handler.raft.LeaderHeartbeatHandler;
 import dev.tiltrikt.orion.service.domain.handler.raft.CandidateRequestHandler;
+import dev.tiltrikt.orion.service.domain.handler.raft.LeaderHeartbeatHandler;
 import dev.tiltrikt.orion.service.domain.handler.raft.VoteRequestHandler;
+import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -30,6 +31,8 @@ public class KafkaNodeEventConsumer implements MessageListener<String, Object>, 
 
     @NotNull VoteRequestHandler voteRequestHandler;
 
+    @NotNull OrionServiceNode thisOrionServiceNode;
+
     public void receiveHeartbeat(@NotNull LeaderHeartbeatEvent event) {
         log.info("Received heartbeat: {}", event);
         leaderHeartbeatHandler.handle(event);
@@ -47,6 +50,9 @@ public class KafkaNodeEventConsumer implements MessageListener<String, Object>, 
 
     @Override
     public void onMessage(@NotNull ConsumerRecord<String, Object> record) {
+        if (record.key().equals(String.valueOf(thisOrionServiceNode.getId()))) {
+            return;
+        }
         if (record.value() instanceof LeaderHeartbeatEvent) {
             receiveHeartbeat((LeaderHeartbeatEvent) record.value());
         } else if (record.value() instanceof CandidateRequestEvent) {

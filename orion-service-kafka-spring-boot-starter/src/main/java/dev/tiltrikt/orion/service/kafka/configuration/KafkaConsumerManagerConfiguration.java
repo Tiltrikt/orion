@@ -4,13 +4,13 @@ import dev.tiltrikt.orion.common.event.InstanceHeartbeatEvent;
 import dev.tiltrikt.orion.service.common.consumer.manager.ConsumerManager;
 import dev.tiltrikt.orion.service.common.publisher.HeartbeatErrorPublisher;
 import dev.tiltrikt.orion.service.domain.exception.InstanceNotFoundException;
-import dev.tiltrikt.orion.service.domain.handler.raft.CandidateRequestHandler;
-import dev.tiltrikt.orion.service.domain.handler.raft.LeaderHeartbeatHandler;
-import dev.tiltrikt.orion.service.domain.handler.raft.VoteRequestHandler;
 import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.deregistration.DeregistrationHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.heartbeat.HeartbeatHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.registration.RegistrationHandler;
+import dev.tiltrikt.orion.service.domain.handler.raft.CandidateRequestHandler;
+import dev.tiltrikt.orion.service.domain.handler.raft.LeaderHeartbeatHandler;
+import dev.tiltrikt.orion.service.domain.handler.raft.VoteRequestHandler;
 import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import dev.tiltrikt.orion.service.domain.model.factory.InstanceModelFactory;
 import dev.tiltrikt.orion.service.kafka.consumer.manager.KafkaInstanceEventConsumerManager;
@@ -31,7 +31,7 @@ public class KafkaConsumerManagerConfiguration {
     @Bean
     @NotNull ConsumerManager kafkaInstanceEventConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
-            @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
+            @NotNull KafkaListenerContainerFactory<?> kafkaListenerContainerFactory,
             @NotNull RegistrationHandler registrationHandler,
             @NotNull DeregistrationHandler deregistrationHandler,
             @NotNull HeartbeatHandler heartbeatHandler,
@@ -50,7 +50,7 @@ public class KafkaConsumerManagerConfiguration {
     @Bean
     @NotNull ConsumerManager kafkaNodeEventConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
-            @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
+            @NotNull KafkaListenerContainerFactory<?> kafkaListenerContainerFactory,
             @NotNull OrionServiceNode thisOrionServiceNode,
             @NotNull CandidateRequestHandler candidateRequestHandler,
             @NotNull LeaderHeartbeatHandler leaderHeartbeatHandler,
@@ -69,7 +69,7 @@ public class KafkaConsumerManagerConfiguration {
     @Bean
     @NotNull ConsumerManager kafkaReplicationConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
-            @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
+            @NotNull KafkaListenerContainerFactory<?> kafkaListenerContainerFactory,
             @NotNull OrionServiceNode thisOrionServiceNode,
             @NotNull ReplicationHandler replicationHandler
     ) {

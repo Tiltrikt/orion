@@ -9,7 +9,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.TaskScheduler;
 
 import java.time.Duration;
@@ -37,8 +36,7 @@ public class LeaseExpirationCheckJobManager {
         );
     }
 
-    @EventListener
-    public void becomeLeader(@NotNull BecomeLeaderEvent event) {
+    public void startJob() {
         if (scheduledTask == null || scheduledTask.isCancelled()) {
             scheduledTask = taskScheduler.scheduleAtFixedRate(
                     leaseExpirationCheckJob,
@@ -48,8 +46,7 @@ public class LeaseExpirationCheckJobManager {
         }
     }
 
-    @EventListener
-    public void becomeFollower(@NotNull BecomeFollowerEvent event) {
+    public void stopJob() {
         if (scheduledTask != null && !scheduledTask.isCancelled()) {
             scheduledTask.cancel(false);
         }

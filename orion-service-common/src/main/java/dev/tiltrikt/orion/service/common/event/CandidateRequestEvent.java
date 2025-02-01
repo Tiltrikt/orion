@@ -2,7 +2,6 @@ package dev.tiltrikt.orion.service.common.event;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.jetbrains.annotations.NotNull;
 
 @ToString
 @Getter

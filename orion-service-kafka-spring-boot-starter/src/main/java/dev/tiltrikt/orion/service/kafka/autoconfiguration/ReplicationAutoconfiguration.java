@@ -7,7 +7,6 @@ import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -19,7 +18,7 @@ public class ReplicationAutoconfiguration implements CommandLineRunner {
     @NotNull ConsumerManager nodeEventConsumerManager;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         nodeEventConsumerManager.startListening();
     }
 }

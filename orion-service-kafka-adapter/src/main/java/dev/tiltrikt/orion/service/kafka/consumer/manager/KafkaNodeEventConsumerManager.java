@@ -30,10 +30,11 @@ public class KafkaNodeEventConsumerManager extends KafkaAbstractConsumerManager 
 
     public KafkaNodeEventConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
-            @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
+            @NotNull KafkaListenerContainerFactory<?> kafkaListenerContainerFactory,
             @NotNull CandidateRequestHandler candidateRequestHandler,
             @NotNull LeaderHeartbeatHandler leaderHeartbeatHandler,
-            @NotNull VoteRequestHandler voteRequestHandler, @NotNull OrionServiceNode thisOrionServiceNode) {
+            @NotNull VoteRequestHandler voteRequestHandler,
+            @NotNull OrionServiceNode thisOrionServiceNode) {
         super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory);
         this.candidateRequestHandler = candidateRequestHandler;
         this.leaderHeartbeatHandler = leaderHeartbeatHandler;
@@ -49,7 +50,7 @@ public class KafkaNodeEventConsumerManager extends KafkaAbstractConsumerManager 
                 KAFKA_NODE_EVENT_CONSUMER,
                 String.valueOf(thisOrionServiceNode.getId())
         );
-        kafkaListenerEndpoint.setBean(new KafkaNodeEventConsumer(candidateRequestHandler, leaderHeartbeatHandler, voteRequestHandler));
+        kafkaListenerEndpoint.setBean(new KafkaNodeEventConsumer(candidateRequestHandler, leaderHeartbeatHandler, voteRequestHandler, thisOrionServiceNode));
         kafkaListenerEndpoint.setMethod(KafkaNodeEventConsumer.class.getMethod("onMessage", ConsumerRecord.class));
         kafkaListenerEndpointRegistry.registerListenerContainer(kafkaListenerEndpoint, kafkaListenerContainerFactory, true);
     }

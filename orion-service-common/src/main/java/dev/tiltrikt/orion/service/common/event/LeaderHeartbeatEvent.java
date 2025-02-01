@@ -11,4 +11,6 @@ import lombok.experimental.FieldDefaults;
 public class LeaderHeartbeatEvent {
 
     int id;
+
+    int term;
 }

@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class LeaseExpirationCheckJob implements Runnable {
 
     @NotNull InstanceService instanceService;
 
+    @Async
     @Override
     public void run() {
         List<InstanceModel> instanceModelList = instanceService.getAllExpired();

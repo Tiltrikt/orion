@@ -1,7 +1,6 @@
 package dev.tiltrikt.orion.service.kafka.consumer.manager;
 
 import dev.tiltrikt.orion.service.common.consumer.manager.ConsumerManager;
-import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,7 +17,7 @@ public abstract class KafkaAbstractConsumerManager implements ConsumerManager {
 
     @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
-    @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory;
+    @NotNull KafkaListenerContainerFactory<?> kafkaListenerContainerFactory;
 
     protected void destroyContainer(@NotNull String id) {
         MessageListenerContainer messageListenerContainer = kafkaListenerEndpointRegistry.getListenerContainer(id);
@@ -27,11 +26,11 @@ public abstract class KafkaAbstractConsumerManager implements ConsumerManager {
         }
     }
 
-    protected @NotNull <T> MethodKafkaListenerEndpoint<String, T> createDefaultMethodKafkaListenerEndpoint(
+    protected @NotNull <K, V> MethodKafkaListenerEndpoint<K, V> createDefaultMethodKafkaListenerEndpoint(
             @NotNull String topic,
             @NotNull String listenerId,
             @NotNull String groupId) {
-        MethodKafkaListenerEndpoint<String, T> kafkaListenerEndpoint = new MethodKafkaListenerEndpoint<>();
+        MethodKafkaListenerEndpoint<K, V> kafkaListenerEndpoint = new MethodKafkaListenerEndpoint<>();
         kafkaListenerEndpoint.setId(listenerId);
         kafkaListenerEndpoint.setGroupId(groupId);
         kafkaListenerEndpoint.setAutoStartup(true);

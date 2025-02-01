@@ -3,8 +3,6 @@ package dev.tiltrikt.orion.service.domain.model;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.context.event.EventListener;
 
 @Getter
 @Setter
@@ -15,18 +13,13 @@ public class OrionServiceNode {
 
     int id;
 
-    int leaseDuration;
-
     @NonFinal
     boolean isLeader;
 
-    @EventListener
-    public void handleBecomeLeaderEvent(@NotNull BecomeLeaderEvent event) {
-        isLeader = true;
-    }
+    @NonFinal
+    int term;
 
-    @EventListener
-    public void handleBecomeFollowerEvent(@NotNull BecomeFollowerEvent event) {
-        isLeader = false;
+    public void increaseTerm() {
+        term++;
     }
 }

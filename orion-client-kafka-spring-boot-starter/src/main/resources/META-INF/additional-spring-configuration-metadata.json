@@ -31,7 +31,9 @@
       "type": "java.util.List",
       "sourceType": "dev.tiltrikt.orion.client.kafka.configuration.OrionKafkaConfigurationProperties",
       "description": "The address of the Kafka broker(s) that the Orion client connects to for message publishing and consumption.",
-      "defaultValue": ["localhost:9092"]
+      "defaultValue": [
+        "localhost:9092"
+      ]
     },
     {
       "name": "orion.client.kafka.trusted-packages",

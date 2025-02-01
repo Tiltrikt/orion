@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -19,12 +19,14 @@ public class KafkaConsumerLeadershipManager implements ConsumerLeadershipManager
     @Qualifier("kafkaReplicationConsumerManager")
     @NotNull ConsumerManager replicationConsumerManager;
 
+    @Async
     @Override
     public void becomeLeader() {
         replicationConsumerManager.stopListening();
         instanceEventConsumerManager.startListening();
     }
 
+    @Async
     @Override
     public void becomeFollower() {
         instanceEventConsumerManager.stopListening();
