@@ -33,10 +33,10 @@ public class BecomeCandidateAction implements Action<States, Events> {
         log.info("   |");
         log.info("   V");
         log.info("State: CANDIDATE");
+        thisOrionServiceNode.increaseTerm();
         voteCounterService.resetCounter();
         voteCounterService.addVote(thisOrionServiceNode.getId());
         candidateRequestPublisher.publish(new CandidateRequestEvent(thisOrionServiceNode.getId(), thisOrionServiceNode.getTerm()));
         electionTimeoutTaskManager.refreshTimer();
-        thisOrionServiceNode.increaseTerm();
     }
 }
