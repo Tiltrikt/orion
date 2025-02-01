@@ -4,7 +4,7 @@ import dev.tiltrikt.orion.common.event.InstanceHeartbeatEvent;
 import dev.tiltrikt.orion.service.common.consumer.manager.ConsumerManager;
 import dev.tiltrikt.orion.service.common.publisher.HeartbeatErrorPublisher;
 import dev.tiltrikt.orion.service.domain.exception.InstanceNotFoundException;
-import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandler;
+import dev.tiltrikt.orion.service.domain.handler.follower.ReplicationHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.deregistration.DeregistrationHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.heartbeat.HeartbeatHandler;
 import dev.tiltrikt.orion.service.domain.handler.leader.registration.RegistrationHandler;
@@ -82,7 +82,7 @@ public class KafkaConsumerManagerConfiguration {
     }
 
     @Bean
-    public DefaultErrorHandler errorHandler(@NotNull HeartbeatErrorPublisher errorPublisher) {
+    @NotNull DefaultErrorHandler errorHandler(@NotNull HeartbeatErrorPublisher errorPublisher) {
         BackOff fixedBackOff = new FixedBackOff(1, 0);
         return new DefaultErrorHandler((consumerRecord, exception) -> {
             if (exception.getCause() instanceof InstanceNotFoundException) {

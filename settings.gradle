@@ -43,7 +43,8 @@ rootProject.name = 'orion'
         "orion-example:fetch-registry-client",
         "orion-example:self-registration-client",
         "orion-example:api-gateway",
-        "orion-example:orion-service"
+        "orion-example:orion-service",
+        "orion-example:topic-configuration"
 
 ].forEach {
     include it

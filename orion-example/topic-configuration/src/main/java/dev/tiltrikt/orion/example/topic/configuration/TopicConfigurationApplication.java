@@ -1,12 +1,12 @@
-package dev.tiltrikt.orion.example;
+package dev.tiltrikt.orion.example.topic.configuration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OrionServiceApplication {
+public class TopicConfigurationApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OrionServiceApplication.class, args);
+        SpringApplication.run(TopicConfigurationApplication.class, args);
     }
 }

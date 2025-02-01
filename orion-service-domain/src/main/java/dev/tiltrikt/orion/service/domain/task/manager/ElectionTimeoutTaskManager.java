@@ -11,12 +11,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.statemachine.StateMachine;
-import org.springframework.stereotype.Component;
 
 import java.util.Random;
 import java.util.Timer;
 
-@Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ElectionTimeoutTaskManager {
@@ -36,7 +34,7 @@ public class ElectionTimeoutTaskManager {
         }
         timer = new Timer();
         ElectionTimeoutTask electionTimeoutTask = new ElectionTimeoutTask(stateMachine);
-        int leaseExpiration = 5000 + random.nextInt(20) * 100;
+        int leaseExpiration = 5000 + random.nextInt(200) * 10;
         timer.schedule(electionTimeoutTask, leaseExpiration);
     }
 }

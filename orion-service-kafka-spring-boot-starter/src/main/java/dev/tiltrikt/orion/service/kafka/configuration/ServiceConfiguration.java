@@ -4,6 +4,8 @@ import dev.tiltrikt.orion.service.common.publisher.ReplicationRegistryUpdatePubl
 import dev.tiltrikt.orion.service.domain.repository.InstanceRepository;
 import dev.tiltrikt.orion.service.domain.service.InstanceService;
 import dev.tiltrikt.orion.service.domain.service.InstanceServiceImpl;
+import dev.tiltrikt.orion.service.domain.service.VoteCounterService;
+import dev.tiltrikt.orion.service.domain.service.VoteCounterServiceImpl;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,5 +18,10 @@ public class ServiceConfiguration {
             @NotNull InstanceRepository instanceRepository,
             @NotNull ReplicationRegistryUpdatePublisher replicationRegistryUpdatePublisher) {
         return new InstanceServiceImpl(instanceRepository, replicationRegistryUpdatePublisher);
+    }
+
+    @Bean
+    @NotNull VoteCounterService voteCounterService() {
+        return new VoteCounterServiceImpl();
     }
 }

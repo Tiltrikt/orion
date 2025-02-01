@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(":orion-common-kafka")
+    implementation "org.springframework.boot:spring-boot-starter"
+}

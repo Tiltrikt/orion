@@ -2,7 +2,7 @@ package dev.tiltrikt.orion.service.kafka.consumer;
 
 import dev.tiltrikt.orion.common.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.common.event.ReplicationEvent;
-import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandler;
+import dev.tiltrikt.orion.service.domain.handler.follower.ReplicationHandler;
 import dev.tiltrikt.orion.service.domain.model.InstanceModel;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

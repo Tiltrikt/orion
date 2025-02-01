@@ -2,7 +2,7 @@ package dev.tiltrikt.orion.service.kafka.consumer.manager;
 
 import dev.tiltrikt.orion.common.configuration.KafkaTopicConfiguration;
 import dev.tiltrikt.orion.common.event.ReplicationEvent;
-import dev.tiltrikt.orion.service.domain.handler.follover.ReplicationHandler;
+import dev.tiltrikt.orion.service.domain.handler.follower.ReplicationHandler;
 import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
 import dev.tiltrikt.orion.service.kafka.consumer.KafkaReplicationConsumer;
 import lombok.AccessLevel;
@@ -25,7 +25,7 @@ public class KafkaReplicationConsumerManager extends KafkaAbstractConsumerManage
 
     public KafkaReplicationConsumerManager(
             @NotNull KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
-            @NotNull KafkaListenerContainerFactory kafkaListenerContainerFactory,
+            @NotNull KafkaListenerContainerFactory<?> kafkaListenerContainerFactory,
             @NotNull ReplicationHandler replicationHandler,
             @NotNull OrionServiceNode thisOrionServiceNode) {
         super(kafkaListenerEndpointRegistry, kafkaListenerContainerFactory);
@@ -36,6 +36,9 @@ public class KafkaReplicationConsumerManager extends KafkaAbstractConsumerManage
     @Override
     @SneakyThrows
     public void startListening() {
+        if (kafkaListenerEndpointRegistry.getListenerContainer(KAFKA_REPLICATION_CONSUMER) != null) {
+            return;
+        }
         MethodKafkaListenerEndpoint<String, ReplicationEvent> kafkaListenerEndpoint = createDefaultMethodKafkaListenerEndpoint(
                 KafkaTopicConfiguration.REPLICATION_TOPIC,
                 KAFKA_REPLICATION_CONSUMER,

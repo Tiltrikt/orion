@@ -10,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.statemachine.StateMachine;
-import org.springframework.stereotype.Component;
 
-@Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class VoteRequestHandlerImpl implements VoteRequestHandler {
@@ -23,11 +21,13 @@ public class VoteRequestHandlerImpl implements VoteRequestHandler {
 
     @NotNull OrionServiceNode thisOrionServiceNode;
 
+    int clusterSize;
+
     @Override
     public void handle(@NotNull VoteEvent event) {
         if (event.getCandidateId() == thisOrionServiceNode.getId()) {
             voteCounterService.addVote(event.getVoterId());
-            if (voteCounterService.getCounter() >= Math.ceil((double) 3 / 2)) {
+            if (voteCounterService.getCounter() >= Math.ceil((double) clusterSize / 2)) {
                 stateMachine.sendEvent(Events.WIN_ELECTION);
             }
         }
