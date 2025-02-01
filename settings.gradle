@@ -26,6 +26,7 @@ dependencyResolutionManagement {
 rootProject.name = 'orion'
 
 [
+        "orion-common",
         "orion-common-event",
         "orion-common-kafka",
 
@@ -43,7 +44,6 @@ rootProject.name = 'orion'
         "orion-example:self-registration-client",
         "orion-example:api-gateway",
         "orion-example:orion-service"
-
 
 ].forEach {
     include it

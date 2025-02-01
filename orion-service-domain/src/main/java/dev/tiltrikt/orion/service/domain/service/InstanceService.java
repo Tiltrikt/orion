@@ -9,6 +9,8 @@ public interface InstanceService {
 
     @NotNull List<InstanceModel> getAllExpired();
 
+    boolean existsById(@NotNull String instanceId);
+
     @NotNull InstanceModel getById(@NotNull String instanceId);
 
     @NotNull InstanceModel save(@NotNull InstanceModel lease);
@@ -18,4 +20,6 @@ public interface InstanceService {
     void deleteAll(@NotNull List<InstanceModel> modelList);
 
     void deleteById(@NotNull String instanceId);
+
+    @NotNull List<InstanceModel> findAll();
 }

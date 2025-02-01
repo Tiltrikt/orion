@@ -1,3 +1,9 @@
-dev.tiltrikt.orion.service.kafka.autoconfiguration.OrionServiceAutoconfiguration
-dev.tiltrikt.orion.service.domain.configuration.H2Configuration
-dev.tiltrikt.orion.service.domain.configuration.JobConfiguration
+dev.tiltrikt.orion.service.kafka.configuration.HandlerConfiguration
+dev.tiltrikt.orion.service.kafka.configuration.KafkaConsumerManagerConfiguration
+dev.tiltrikt.orion.service.kafka.configuration.KafkaPublisherConfiguration
+dev.tiltrikt.orion.service.kafka.configuration.LeadershipManagerConfiguration
+dev.tiltrikt.orion.service.kafka.configuration.OrionServiceNodeConfiguration
+dev.tiltrikt.orion.service.kafka.configuration.RepositoryConfiguration
+dev.tiltrikt.orion.service.kafka.configuration.ServiceConfiguration
+dev.tiltrikt.orion.service.kafka.configuration.InstanceModelFactoryConfiguration
+dev.tiltrikt.orion.service.kafka.autoconfiguration.ReplicationAutoconfiguration
