@@ -7,6 +7,7 @@ import dev.tiltrikt.orion.common.event.RegistryUpdateEvent;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.TopicPartition;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.kafka.annotation.KafkaHandler;
@@ -17,6 +18,7 @@ import org.springframework.kafka.support.KafkaNull;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 
+import java.time.Instant;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class FetchRegistryConsumer implements ConsumerSeekAware {
 
     @KafkaHandler
     public void receive(@NotNull RegistryUpdateEvent event) {
+        System.out.println(event.getInstanceId() + " " + Instant.now().toEpochMilli());
         OrionInstance orionInstance = new OrionInstance(
                 event.getServiceId(),
                 event.getHost(),
