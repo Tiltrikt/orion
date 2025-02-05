@@ -42,6 +42,8 @@ public class KafkaPublisherAutoconfiguration {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, orionKafkaConfigurationProperties.getBootstrapServers());
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "gzip");
+        props.put(ProducerConfig.COMPRESSION_GZIP_LEVEL_CONFIG, 9);
         return props;
     }
 

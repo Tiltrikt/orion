@@ -1,4 +1,4 @@
 orion:
   service:
-    cluster-size: 3
+    cluster-size: 1
     node-id: 1

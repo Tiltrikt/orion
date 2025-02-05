@@ -4,6 +4,7 @@ import {Reader, SCHEMA_TYPE_JSON, SchemaRegistry, Writer,} from "k6/x/kafka";
 const writer = new Writer({
     brokers: ["127.0.0.1:9092"],
     topic: "instance-event",
+    compression: "gzip"
 });
 
 const reader = new Reader({

@@ -1,0 +1,21 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+
+  main:
+    banner-mode: off
+
+eureka:
+
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+  server:
+    delta-retention-timer-interval-in-ms: 1000
+    response-cache-update-interval-ms: 1000
+  instance:
+    preferIpAddress: true

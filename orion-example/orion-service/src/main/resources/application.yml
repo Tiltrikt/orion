@@ -11,6 +11,7 @@ spring:
         delivery.timeout.ms: ${KAFKA_DELIVERY_TIMEOUT_MS}
         request.timeout.ms: ${KAFKA_REQUEST_TIMEOUT_MS}
         max.block.ms: ${KAFKA_MAX_BLOCK_MS}
+      compression-type: gzip
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer

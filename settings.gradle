@@ -46,6 +46,9 @@ rootProject.name = 'orion'
         "orion-example:orion-service",
         "orion-example:topic-configuration",
 
+        "orion-example:eureka-fetch-registry",
+        "orion-example:eureka-service",
+
         "orion-test"
 
 ].forEach {

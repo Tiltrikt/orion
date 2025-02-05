@@ -1,0 +1,27 @@
+server:
+  port: 8001
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: false
+    registry-fetch-interval-seconds: 1
+
+spring:
+  cloud:
+    discovery:
+      enabled: true
+
+
+logging:
+  level:
+    "com.netflix.discovery.DiscoveryClient": DEBUG
+    root: off
+
+  file:
+    name: logs/logfile.txt
+    path: logs

@@ -2,6 +2,7 @@ package dev.tiltrikt.orion.service.kafka.configuration;
 
 import dev.tiltrikt.orion.service.common.consumer.manager.ConsumerLeadershipManager;
 import dev.tiltrikt.orion.service.common.publisher.CandidateRequestPublisher;
+import dev.tiltrikt.orion.service.domain.handler.raft.VoteRequestHandler;
 import dev.tiltrikt.orion.service.domain.job.manager.LeaderHeartbeatJobManager;
 import dev.tiltrikt.orion.service.domain.job.manager.LeaseExpirationCheckJobManager;
 import dev.tiltrikt.orion.service.domain.model.OrionServiceNode;
@@ -112,13 +113,15 @@ public class RaftStateMachineConfiguration extends EnumStateMachineConfigurerAda
             @NotNull ElectionTimeoutTaskManager electionTimeoutTaskManager,
             @NotNull CandidateRequestPublisher candidateRequestPublisher,
             @NotNull VoteCounterService voteCounterService,
-            @NotNull OrionServiceNode thisOrionServiceNode
-    ) {
+            @NotNull OrionServiceNode thisOrionServiceNode,
+            @NotNull VoteRequestHandler voteRequestHandler
+            ) {
         return new BecomeCandidateAction(
                 electionTimeoutTaskManager,
                 candidateRequestPublisher,
                 voteCounterService,
-                thisOrionServiceNode
+                thisOrionServiceNode,
+                voteRequestHandler
         );
     }
 
