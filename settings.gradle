@@ -48,6 +48,9 @@ rootProject.name = 'orion'
 
         "orion-example:eureka-fetch-registry",
         "orion-example:eureka-service",
+        "orion-example:consul-fetch-registry",
+        "orion-example:kafka-max-connections-test",
+
 
         "orion-test"
 

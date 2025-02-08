@@ -1,0 +1,5 @@
+dependencies {
+    implementation project(":orion-common-kafka")
+    implementation project(":orion-common-event")
+    implementation "org.springframework.boot:spring-boot-starter"
+}
