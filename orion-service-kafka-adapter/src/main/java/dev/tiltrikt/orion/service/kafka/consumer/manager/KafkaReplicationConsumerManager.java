@@ -14,6 +14,8 @@ import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.config.MethodKafkaListenerEndpoint;
 
+import java.util.List;
+
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class KafkaReplicationConsumerManager extends KafkaAbstractConsumerManager {
 
@@ -45,7 +47,7 @@ public class KafkaReplicationConsumerManager extends KafkaAbstractConsumerManage
                 String.valueOf(thisOrionServiceNode.getId())
         );
         kafkaListenerEndpoint.setBean(new KafkaReplicationConsumer(replicationHandler));
-        kafkaListenerEndpoint.setMethod(KafkaReplicationConsumer.class.getMethod("onMessage", ConsumerRecord.class));
+        kafkaListenerEndpoint.setMethod(KafkaReplicationConsumer.class.getMethod("onMessage", List.class));
         kafkaListenerEndpointRegistry.registerListenerContainer(kafkaListenerEndpoint, kafkaListenerContainerFactory, true);
     }
 

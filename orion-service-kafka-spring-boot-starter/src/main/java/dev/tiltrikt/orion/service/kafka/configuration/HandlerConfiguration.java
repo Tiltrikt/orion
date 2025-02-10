@@ -1,5 +1,6 @@
 package dev.tiltrikt.orion.service.kafka.configuration;
 
+import dev.tiltrikt.orion.service.common.publisher.HeartbeatErrorPublisher;
 import dev.tiltrikt.orion.service.common.publisher.RegistryUpdatePublisher;
 import dev.tiltrikt.orion.service.common.publisher.VotePublisher;
 import dev.tiltrikt.orion.service.domain.handler.follower.ReplicationHandler;
@@ -43,8 +44,9 @@ public class HandlerConfiguration {
     @Bean
     @NotNull HeartbeatHandler heartbeatHandler(
             @NotNull InstanceService instanceService,
-            @NotNull InstanceModelFactory instanceModelFactory) {
-        return new HeartbeatHandlerImpl(instanceService, instanceModelFactory);
+            @NotNull InstanceModelFactory instanceModelFactory,
+            @NotNull HeartbeatErrorPublisher heartbeatErrorPublisher) {
+        return new HeartbeatHandlerImpl(instanceService, instanceModelFactory, heartbeatErrorPublisher);
     }
 
     @Bean

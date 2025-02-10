@@ -72,6 +72,21 @@ public class InstanceServiceImpl implements InstanceService {
     }
 
     @Override
+    public @NotNull List<InstanceModel> saveAll(@NotNull List<InstanceModel> instanceModels) {
+        return instanceRepository.saveAll(instanceModels);
+    }
+
+    @Override
+    public @NotNull List<InstanceModel> getAllById(@NotNull List<String> instanceIdList) {
+        return instanceRepository.findAllById(instanceIdList);
+    }
+
+    @Override
+    public void deleteAllById(@NotNull List<String> instanceIdList) {
+        instanceRepository.deleteAllById(instanceIdList);
+    }
+
+    @Override
     public @NotNull InstanceModel renewLicense(@NotNull String instanceId) {
         InstanceModel instanceModel = instanceRepository.findById(instanceId)
                 .orElseThrow(() -> new InstanceNotFoundException("Instance '%s' not exists", instanceId));

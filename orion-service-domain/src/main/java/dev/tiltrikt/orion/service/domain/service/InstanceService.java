@@ -22,4 +22,10 @@ public interface InstanceService {
     void deleteById(@NotNull String instanceId);
 
     @NotNull List<InstanceModel> findAll();
+
+    @NotNull List<InstanceModel> saveAll(@NotNull List<InstanceModel> instanceModels);
+
+    @NotNull List<InstanceModel> getAllById(@NotNull List<String> instanceIdList);
+
+    void deleteAllById(@NotNull List<String> instanceIdList);
 }
