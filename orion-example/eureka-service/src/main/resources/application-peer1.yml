@@ -1,0 +1,11 @@
+eureka:
+  instance:
+    hostname: eureka-peer1
+    appname: eureka-cluster
+  client:
+    serviceUrl:
+      defaultZone: http://147.232.205.39:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+server:
+  port: 8761

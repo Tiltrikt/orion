@@ -17,7 +17,7 @@ eureka:
   server:
     delta-retention-timer-interval-in-ms: 1000
     response-cache-update-interval-ms: 1000
-    eviction-interval-timer-in-ms: 1000
+#    eviction-interval-timer-in-ms: 1000
     enable-self-preservation: false
   instance:
     preferIpAddress: true
