@@ -1,4 +1,0 @@
-orion:
-  service:
-    cluster-size: 3
-    node-id: 3

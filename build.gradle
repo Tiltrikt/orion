@@ -14,7 +14,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
     group = 'dev.tiltrikt'
-    version = '0.0.17'
+    version = '0.0.18'
 
     java {
         toolchain {
@@ -50,7 +50,7 @@ subprojects {
             publications {
                 "$project.name"(MavenPublication) {
                     from components.java
-                    artifactId = "${project.name}-spring-cloud-starter"
+                    artifactId = "${project.name}"
                     groupId = project.group
                     version = project.version
                 }

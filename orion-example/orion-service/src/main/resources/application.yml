@@ -20,6 +20,11 @@ spring:
         spring.json.trusted.packages: "*"
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
 
+orion:
+  service:
+    cluster-size: ${ORION_SERVICE_CLUSTER_SIZE}
+    node-id: ${ORION_SERVICE_NODE_ID}
+
 logging:
   level:
     root: error
