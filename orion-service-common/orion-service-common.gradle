@@ -1,4 +1,6 @@
 dependencies {
-    api project(":orion-common-event")
+//    api project(":orion-common-event")
+    api "dev.tiltrikt:orion-common-event:1.0.1"
+
     implementation "org.springframework:spring-context:7.0.0-M1"
 }

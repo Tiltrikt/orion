@@ -1,3 +1,5 @@
 dependencies {
-    api project(":orion-common")
+//    api project(":orion-common")
+    api "dev.tiltrikt:orion-common:1.0.1"
+
 }

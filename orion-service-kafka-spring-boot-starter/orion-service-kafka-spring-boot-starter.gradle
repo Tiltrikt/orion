@@ -1,7 +1,9 @@
 dependencies {
     implementation 'org.springframework.statemachine:spring-statemachine-core:4.0.0'
 
-    api project(":orion-service-kafka-adapter")
+//    api project(":orion-service-kafka-adapter")
+    api "dev.tiltrikt:orion-service-kafka-adapter:1.0.1"
+
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 }

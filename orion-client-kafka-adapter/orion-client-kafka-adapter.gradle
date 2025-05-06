@@ -1,5 +1,9 @@
 dependencies {
-    api project(":orion-client-domain")
-    api project(":orion-client-common")
-    api project(":orion-common-kafka")
+    api "dev.tiltrikt:orion-client-domain:1.0.1"
+    api "dev.tiltrikt:orion-client-common:1.0.1"
+    api "dev.tiltrikt:orion-common-kafka:1.0.1"
+
+//    api project(":orion-client-domain")
+//    api project(":orion-client-common")
+//    api project(":orion-common-kafka")
 }

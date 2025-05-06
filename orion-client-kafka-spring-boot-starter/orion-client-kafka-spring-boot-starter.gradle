@@ -1,5 +1,7 @@
 dependencies {
-    api project(":orion-client-kafka-adapter")
+//    api project(":orion-client-kafka-adapter")
+    api "dev.tiltrikt:orion-client-kafka-adapter:1.0.1"
+
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 

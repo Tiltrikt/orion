@@ -1,5 +1,7 @@
 dependencies {
-    api project(":orion-client-common")
+//    api project(":orion-client-common")
+    api "dev.tiltrikt:orion-client-common:1.0.1"
+
     api "org.springframework.cloud:spring-cloud-commons"
     api "org.springframework.cloud:spring-cloud-starter-loadbalancer"
     compileOnly "org.springframework.boot:spring-boot-starter-webflux"

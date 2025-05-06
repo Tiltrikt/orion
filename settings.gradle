@@ -20,6 +20,14 @@ dependencyResolutionManagement {
                 header(HttpHeaderAuthentication)
             }
         }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/tiltrikt/orion")
+            credentials {
+                username = "tiltrikt"
+                password = System.getenv("ORION_GITHUB_PACKAGES")
+            }
+        }
     }
 }
 
