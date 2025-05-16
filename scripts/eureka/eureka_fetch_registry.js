@@ -1,10 +1,9 @@
 import { sleep } from "k6";
-import http from 'k6/http';// Убедитесь, что http импортируется здесь
-import { check } from "k6";  // Можно добавить check для проверки ответов
+import http from 'k6/http';
+import { check } from "k6";
 
 const baseUrl = "http://host.docker.internal:8761/eureka/v2/apps";
 
-// Функция для генерации XML с динамичным `instance-id`
 function generateInstanceXML(instanceId) {
     return `
     <instance>
@@ -16,7 +15,7 @@ function generateInstanceXML(instanceId) {
         <dataCenterInfo>
             <name>Amazon</name>
             <metadata>
-                <instance-id>${instanceId}</instance-id>  <!-- Динамическое изменение instance-id -->
+                <instance-id>${instanceId}</instance-id>
             </metadata>
         </dataCenterInfo>
         <leaseInfo>
@@ -44,7 +43,6 @@ function fetch_registry(instanceId) {
     const instanceXML = generateInstanceXML(instanceId);
     const url = `${baseUrl}`;
 
-    // Здесь вызываем http.post
     const response = http.get(url);
 
     check(response, {
@@ -55,7 +53,7 @@ function fetch_registry(instanceId) {
 
 export function reader_fun() {
     if (__ITER === 0) {
-        let randomSleep = Math.random(); // значение от 0 до 1
+        let randomSleep = Math.random();
         sleep(randomSleep);
     }
     fetch_registry()

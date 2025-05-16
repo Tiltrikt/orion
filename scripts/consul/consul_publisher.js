@@ -4,7 +4,6 @@ import { check } from "k6";
 
 const consulBaseUrl = "http://host.docker.internal:8500/v1/agent/service";
 
-// Функция для генерации JSON с динамическим `serviceId`
 function generateServiceJSON(serviceId) {
     return {
         ID: serviceId,
@@ -35,13 +34,12 @@ export const options = {
 };
 
 function register(serviceId) {
-    const serviceJSON = generateServiceJSON(serviceId);  // Генерация JSON с динамическим serviceId
+    const serviceJSON = generateServiceJSON(serviceId);
     const url = `${consulBaseUrl}/register`;
     const headers = {
         "Content-Type": "application/json",
     };
 
-    // POST-запрос для регистрации сервиса
     const response = http.put(url, JSON.stringify(serviceJSON), { headers });
 
     check(response, {
@@ -54,7 +52,6 @@ function register(serviceId) {
 function deregister(serviceId) {
     const url = `${consulBaseUrl}/deregister/${serviceId}`;
 
-    // DELETE-запрос для удаления сервиса
     const response = http.put(url);
 
     check(response, {
@@ -65,7 +62,6 @@ function deregister(serviceId) {
 function heartbeat(serviceId) {
     const url = `${consulBaseUrl}/check/pass/service:${serviceId}`;
 
-    // Периодическое обновление состояния сервиса
     const response = http.put(url);
 
     check(response, {
@@ -74,10 +70,10 @@ function heartbeat(serviceId) {
 }
 
 export function writer_fun() {
-    const serviceId = __VU.toString();  // Используем виртуальный пользователь для динамического serviceId
+    const serviceId = __VU.toString();
     if (__ITER === 0) {
-        register(serviceId);  // Регистрация сервиса
+        register(serviceId);
     }
     sleep(5);
-    heartbeat(serviceId);  // Отправка heartbeat
+    heartbeat(serviceId);
 }

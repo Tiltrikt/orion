@@ -1,10 +1,9 @@
     import { sleep } from "k6";
-    import http from 'k6/http';// Убедитесь, что http импортируется здесь
-    import { check } from "k6";  // Можно добавить check для проверки ответов
+    import http from 'k6/http'
+    import { check } from "k6";
 
     const baseUrl = "http://host.docker.internal:8761/eureka/v2/apps/myApp";
 
-    // Функция для генерации XML с динамичным `instance-id`
     function generateInstanceXML(instanceId) {
         return `
         <instance>
@@ -16,7 +15,7 @@
             <dataCenterInfo>
                 <name>Amazon</name>
                 <metadata>
-                    <instance-id>${instanceId}</instance-id>  <!-- Динамическое изменение instance-id -->
+                    <instance-id>${instanceId}</instance-id>
                 </metadata>
             </dataCenterInfo>
             <leaseInfo>
@@ -41,13 +40,12 @@
     };
 
     function register(instanceId) {
-        const instanceXML = generateInstanceXML(instanceId);  // Генерация XML с динамичным instance-id
+        const instanceXML = generateInstanceXML(instanceId);
         const url = `${baseUrl}`;
         const headers = {
             "Content-Type": "application/xml",
         };
 
-        // Здесь вызываем http.post
         const response = http.post(url, instanceXML, { headers });
 
         check(response, {
@@ -60,7 +58,6 @@
     function deregister(instanceId) {
         const url = `${baseUrl}/${instanceId}`;
 
-        // Здесь вызываем http.del
         const response = http.del(url);
 
     }
@@ -68,16 +65,15 @@
     function heartbeat(instanceId) {
         const url = `${baseUrl}/${instanceId}`;
 
-        // Здесь вызываем http.put
         const response = http.put(url);
 
     }
 
     export function writer_fun() {
-        const instanceId = __VU;  // Используем виртуальный пользователь для динамического instanceId
+        const instanceId = __VU;
         if (__ITER === 0) {
-            register(instanceId);  // Регистрация инстанса
+            register(instanceId);
         }
         sleep(5);
-        heartbeat(instanceId);  // Отправка heartbeat
+        heartbeat(instanceId);
     }

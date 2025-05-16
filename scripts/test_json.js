@@ -22,18 +22,17 @@ const schemaRegistry = new SchemaRegistry();
 export const options = {
     scenarios: {
         writer_scenario: {
-            executor: "constant-vus",  // Используем постоянное количество виртуальных пользователей
-            vus: 10,  // 1000 сервисов для записи
-            duration: "1m",  // Продолжительность 1 минута
-            exec: "writer_fun",  // Эта функция будет выполняться для всех виртуальных пользователей в потоке
+            executor: "constant-vus",
+            vus: 10,
+            duration: "1m",
+            exec: "writer_fun",
         },
 
-        // Поток для чтения
         reader_scenario: {
-            executor: "constant-vus",  // Используем постоянное количество виртуальных пользователей
-            vus: 1,  // 1000 сервисов для чтения
-            duration: "1m",  // Продолжительность 1 минута
-            exec: "reader_fun",  // Эта функция будет выполняться для всех виртуальных пользователей в потоке
+            executor: "constant-vus",
+            vus: 1,
+            duration: "1m",
+            exec: "reader_fun",
         },
     },
 };
